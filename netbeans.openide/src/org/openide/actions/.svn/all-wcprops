@@ -1,0 +1,245 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions
+END
+OpenAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/OpenAction.java
+END
+PreviousTabAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/PreviousTabAction.java
+END
+PopupAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/PopupAction.java
+END
+GotoAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/GotoAction.java
+END
+CopyAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/CopyAction.java
+END
+ViewAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/ViewAction.java
+END
+MoveUpAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/MoveUpAction.java
+END
+FindAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/FindAction.java
+END
+CustomizeAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/CustomizeAction.java
+END
+InstantiateAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/InstantiateAction.java
+END
+UndockAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/UndockAction.java
+END
+NewTemplateAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/NewTemplateAction.java
+END
+SaveAllAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/SaveAllAction.java
+END
+CloneViewAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/CloneViewAction.java
+END
+PropertiesAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/PropertiesAction.java
+END
+PrintAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/PrintAction.java
+END
+OpenLocalExplorerAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/OpenLocalExplorerAction.java
+END
+GarbageCollectAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/GarbageCollectAction.java
+END
+CloseViewAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/CloseViewAction.java
+END
+DeleteAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/DeleteAction.java
+END
+ReorderAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/ReorderAction.java
+END
+UndoAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/UndoAction.java
+END
+NextTabAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/NextTabAction.java
+END
+RenameAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/RenameAction.java
+END
+CustomizeBeanAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/CustomizeBeanAction.java
+END
+ActionManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/ActionManager.java
+END
+ReplaceAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/ReplaceAction.java
+END
+PasteAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/PasteAction.java
+END
+SaveAsTemplateAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/SaveAsTemplateAction.java
+END
+WorkspaceSwitchAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/WorkspaceSwitchAction.java
+END
+FileSystemAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/FileSystemAction.java
+END
+EditAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/EditAction.java
+END
+Bundle.properties
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/Bundle.properties
+END
+RedoAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/RedoAction.java
+END
+NewAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/NewAction.java
+END
+CutAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/CutAction.java
+END
+PageSetupAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/PageSetupAction.java
+END
+MoveDownAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/MoveDownAction.java
+END
+SaveAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/SaveAction.java
+END
+ToolsAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/actions/ToolsAction.java
+END

@@ -1,0 +1,155 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text
+END
+PositionRef.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/PositionRef.java
+END
+QuietEditorPane.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/QuietEditorPane.java
+END
+BackwardPosition.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/BackwardPosition.java
+END
+AttributedCharacters.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/AttributedCharacters.java
+END
+EditorSupportLineSet.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/EditorSupportLineSet.java
+END
+IndentEngine.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/IndentEngine.java
+END
+FilterStyledDocument.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/FilterStyledDocument.java
+END
+Annotation.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/Annotation.java
+END
+PrintSettings.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/PrintSettings.java
+END
+DataEditorSupport.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/DataEditorSupport.java
+END
+EnhancedChangeEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/EnhancedChangeEvent.java
+END
+PrintSettingsBeanInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/PrintSettingsBeanInfo.java
+END
+PositionBounds.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/PositionBounds.java
+END
+EditorSupport.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/EditorSupport.java
+END
+Bundle.properties
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/Bundle.properties
+END
+FilterDocument.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/FilterDocument.java
+END
+DefaultPrintable.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/DefaultPrintable.java
+END
+DocumentLine.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/DocumentLine.java
+END
+Line.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/Line.java
+END
+CloneableEditorSupport.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/CloneableEditorSupport.java
+END
+Annotatable.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/Annotatable.java
+END
+CloneableEditor.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/CloneableEditor.java
+END
+LineStruct.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/LineStruct.java
+END
+LineListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/LineListener.java
+END
+NbDocument.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/text/NbDocument.java
+END

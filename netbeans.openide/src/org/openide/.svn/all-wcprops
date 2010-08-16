@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/1107/contrib/cskelton/studio/netbeans.openide/src/org/openide
+END
+WizardDescriptor.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/WizardDescriptor.java
+END
+ServiceType.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/ServiceType.java
+END
+Bundle_openide_cgs.properties
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/Bundle_openide_cgs.properties
+END
+ErrorManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/ErrorManager.java
+END
+NotifyDescriptor.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/NotifyDescriptor.java
+END
+LifecycleManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/LifecycleManager.java
+END
+DialogDisplayer.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/DialogDisplayer.java
+END
+DialogDescriptor.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/DialogDescriptor.java
+END

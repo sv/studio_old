@@ -1,0 +1,173 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes
+END
+DefaultHandle.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/DefaultHandle.java
+END
+IndexedCustomizer.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/IndexedCustomizer.java
+END
+NodeOperation.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/NodeOperation.java
+END
+NodeAcceptor.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/NodeAcceptor.java
+END
+Index.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/Index.java
+END
+Sheet.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/Sheet.java
+END
+AbstractNode.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/AbstractNode.java
+END
+NodeReorderEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/NodeReorderEvent.java
+END
+BeanNode.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/BeanNode.java
+END
+TMUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/TMUtil.java
+END
+BeanChildren.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/BeanChildren.java
+END
+NodeMemberEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/NodeMemberEvent.java
+END
+NodeLookup.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/NodeLookup.java
+END
+PropertySupport.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/PropertySupport.java
+END
+NodeNotFoundException.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/NodeNotFoundException.java
+END
+IndexedPropertySupport.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/IndexedPropertySupport.java
+END
+Bundle.properties
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/Bundle.properties
+END
+NodeOp.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/NodeOp.java
+END
+Node.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/Node.java
+END
+CookieSet.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/CookieSet.java
+END
+NodeAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/NodeAdapter.java
+END
+IndexedNode.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/IndexedNode.java
+END
+ChildrenArray.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/ChildrenArray.java
+END
+NodeEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/NodeEvent.java
+END
+Children.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/Children.java
+END
+NodeTransfer.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/NodeTransfer.java
+END
+FilterNode.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/FilterNode.java
+END
+NodeListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/nodes/NodeListener.java
+END

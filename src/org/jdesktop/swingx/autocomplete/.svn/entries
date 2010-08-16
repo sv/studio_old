@@ -1,0 +1,140 @@
+10
+
+dir
+0
+https://code.kx.com/svn/contrib/cskelton/studio/src/org/jdesktop/swingx/autocomplete
+https://code.kx.com/svn
+add
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+b387b25f-291c-0410-8dc7-e51caacd5b47
+
+AbstractAutoCompleteAdaptor.java
+file
+
+
+
+add
+
+AutoCompleteDocument.java
+file
+
+
+
+add
+
+AutoCompleteComboBoxEditor.java
+file
+
+
+
+add
+
+AutoCompleteFocusAdapter.java
+file
+
+
+
+add
+
+AutoCompleteDecorator.java
+file
+
+
+
+add
+
+DelegatingDocumentEvent.java
+file
+
+
+
+add
+
+AutoCompleteKeyAdapter.java
+file
+
+
+
+add
+
+ComboBoxCellEditor.java
+file
+
+
+
+add
+
+AutoCompletePropertyChangeListener.java
+file
+
+
+
+add
+
+TextComponentAdaptor.java
+file
+
+
+
+add
+
+ComboBoxAdaptor.java
+file
+
+
+
+add
+
+package-info.java
+file
+
+
+
+add
+
+AutoCompleteStyledDocument.java
+file
+
+
+
+add
+
+ListAdaptor.java
+file
+
+
+
+add
+
+ObjectToStringConverter.java
+file
+
+
+
+add
+
+workarounds
+dir
+
+
+
+add
+

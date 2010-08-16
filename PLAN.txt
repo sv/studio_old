@@ -1,0 +1,4 @@
+- Enable subscription
+- online dict merges
+- Copy character arrays from result as strings
+- show realtime chart on data update

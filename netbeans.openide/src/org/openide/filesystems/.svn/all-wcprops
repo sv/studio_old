@@ -1,0 +1,287 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems
+END
+FCLSupport.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FCLSupport.java
+END
+FileAttributeEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileAttributeEvent.java
+END
+XMLFileSystem.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/XMLFileSystem.java
+END
+FileStateInvalidException.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileStateInvalidException.java
+END
+FileObject.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileObject.java
+END
+RefreshRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/RefreshRequest.java
+END
+MIMEResolver.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/MIMEResolver.java
+END
+FileRenameEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileRenameEvent.java
+END
+EnvironmentNotSupportedException.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/EnvironmentNotSupportedException.java
+END
+filesystem.dtd
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/filesystem.dtd
+END
+filesystem1_1.dtd
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/filesystem1_1.dtd
+END
+ExternalUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/ExternalUtil.java
+END
+MultiFileObject.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/MultiFileObject.java
+END
+FileEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileEvent.java
+END
+EventControl.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/EventControl.java
+END
+FileAlreadyLockedException.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileAlreadyLockedException.java
+END
+FileSystem.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileSystem.java
+END
+RepositoryListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/RepositoryListener.java
+END
+FileLock.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileLock.java
+END
+FileStatusListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileStatusListener.java
+END
+AbstractFileObject.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/AbstractFileObject.java
+END
+FileChangeListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileChangeListener.java
+END
+RefreshAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/RefreshAction.java
+END
+AbstractFolder.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/AbstractFolder.java
+END
+LocalFileSystem.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/LocalFileSystem.java
+END
+MultiFileSystem.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/MultiFileSystem.java
+END
+FileURL.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileURL.java
+END
+URLMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/URLMapper.java
+END
+AbstractFileSystem.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/AbstractFileSystem.java
+END
+RepositoryReorderedEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/RepositoryReorderedEvent.java
+END
+FileUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileUtil.java
+END
+Repository.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/Repository.java
+END
+RepositoryAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/RepositoryAdapter.java
+END
+attributes.dtd
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/attributes.dtd
+END
+ListenerList.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/ListenerList.java
+END
+JarFileSystem.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/JarFileSystem.java
+END
+RepositoryEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/RepositoryEvent.java
+END
+MIMESupport.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/MIMESupport.java
+END
+Bundle.properties
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/Bundle.properties
+END
+FileStatusEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileStatusEvent.java
+END
+StreamPool.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/StreamPool.java
+END
+FileSystemCapability.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileSystemCapability.java
+END
+FileChangeAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FileChangeAdapter.java
+END
+FSException.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/FSException.java
+END
+PathElements.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/PathElements.java
+END
+XMLMapAttr.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/XMLMapAttr.java
+END
+DefaultAttributes.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/filesystems/DefaultAttributes.java
+END

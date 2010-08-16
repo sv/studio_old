@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/datatransfer
+END
+ClipboardEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/datatransfer/ClipboardEvent.java
+END
+Bundle.properties
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/datatransfer/Bundle.properties
+END
+ClipboardListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/datatransfer/ClipboardListener.java
+END
+ExTransferable.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/datatransfer/ExTransferable.java
+END
+MultiTransferObject.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/datatransfer/MultiTransferObject.java
+END
+TransferListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/datatransfer/TransferListener.java
+END
+NewType.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/datatransfer/NewType.java
+END
+ExClipboard.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/datatransfer/ExClipboard.java
+END
+PasteType.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/datatransfer/PasteType.java
+END

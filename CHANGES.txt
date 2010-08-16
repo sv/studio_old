@@ -1,0 +1,18 @@
+next
+- Server selection autocompletion
+- Fix error when using Nimbus look&feel
+- Request cancelation fixed
+- Added File -> Config menu to edit configuration
+
+
+version 3.23
+- Support of Timestamp and Timespan types
+- Support of compressed data(kdb v2.6). Saw 4-10 times less data transferred
+- Migrated to Java 6
+- Jfreechart library was upgraded, all other libs dropped
+- Frame title tweaks. Now displayed as 'filename@server_name'
+- Last execution time(full cycle) for last query
+- Decimal format now can be specified in config: DecimalFormat=#.######
+- Look and feel can be specified in config: lookandfeel='lookandfeel class name'. This fix exceptions when using remote desktop on Windows with different theme settings
+- Builtin help has been remove. Please use code.kx.com as documentation source.
+- Excel export change to handle escaping text containing substring <IND>

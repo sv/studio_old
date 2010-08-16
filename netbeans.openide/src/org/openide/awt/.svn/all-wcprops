@@ -1,0 +1,185 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt
+END
+ToolbarToggleButton.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/ToolbarToggleButton.java
+END
+StatusDisplayer.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/StatusDisplayer.java
+END
+Actions.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/Actions.java
+END
+ExecBridge.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/ExecBridge.java
+END
+Toolbar.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/Toolbar.java
+END
+Mnemonics.properties
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/Mnemonics.properties
+END
+SpinButton.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/SpinButton.java
+END
+SpinButtonAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/SpinButtonAdapter.java
+END
+NbPopupMenuUI.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/NbPopupMenuUI.java
+END
+JPopupMenuPlus.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/JPopupMenuPlus.java
+END
+EnabledButtonModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/EnabledButtonModel.java
+END
+SplittedPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/SplittedPanel.java
+END
+HtmlBrowser.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/HtmlBrowser.java
+END
+MouseUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/MouseUtils.java
+END
+SpinButtonListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/SpinButtonListener.java
+END
+JInlineMenu.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/JInlineMenu.java
+END
+SwingBrowserImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/SwingBrowserImpl.java
+END
+AWTTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/AWTTask.java
+END
+ListPane.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/ListPane.java
+END
+UndoRedo.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/UndoRedo.java
+END
+DisabledIcon.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/DisabledIcon.java
+END
+JMenuPlus.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/JMenuPlus.java
+END
+JPopupMenuUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/JPopupMenuUtils.java
+END
+Bundle.properties
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/Bundle.properties
+END
+Mnemonics.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/Mnemonics.java
+END
+MenuBar.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/MenuBar.java
+END
+ToolbarButtonUI.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/ToolbarButtonUI.java
+END
+ToolbarPool.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/ToolbarPool.java
+END
+EqualFlowLayout.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/EqualFlowLayout.java
+END
+ToolbarButton.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/awt/ToolbarButton.java
+END

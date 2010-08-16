@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/enums
+END
+SequenceEnumeration.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/enums/SequenceEnumeration.java
+END
+RemoveDuplicatesEnumeration.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/enums/RemoveDuplicatesEnumeration.java
+END
+ArrayEnumeration.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/enums/ArrayEnumeration.java
+END
+EmptyEnumeration.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/enums/EmptyEnumeration.java
+END
+SingletonEnumeration.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/enums/SingletonEnumeration.java
+END
+QueueEnumeration.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/enums/QueueEnumeration.java
+END
+FilterEnumeration.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/enums/FilterEnumeration.java
+END
+AlterEnumeration.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/757/contrib/cskelton/studio/netbeans.openide/src/org/openide/util/enums/AlterEnumeration.java
+END
