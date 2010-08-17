@@ -119,6 +119,14 @@ public class Config
         return new DecimalFormat(key);
     }
 
+    public void setNumberFormat(String format){
+        if( p != null)
+        {
+            p.put("DecimalFormat",format);
+        }
+        save();
+    }
+
     public static Config getInstance()
     {
         if (instance == null)
@@ -155,11 +163,11 @@ public class Config
 
         while( !finished)
         {
-            FileInputStream in = null;
+            InputStream in = null;
 
             try
             {
-                in = new FileInputStream(candidate);
+                in = new BufferedInputStream(new FileInputStream(candidate),64*1024);
 
                 try
                 {
@@ -430,6 +438,24 @@ public class Config
         if( p != null)
         {
             p.put("lookandfeel", lf);
+        }
+
+        save();
+    }
+
+    public boolean isDictAsTable() {
+        boolean dt = false;
+
+        if (p != null) {
+            dt = Boolean.valueOf(p.getProperty("dict_as_table", "false"));
+        }
+
+        return dt;
+    }
+
+    public void setDictAsTable(boolean dt) {
+        if (p != null) {
+            p.put("dict_as_table", String.valueOf(dt));
         }
 
         save();
