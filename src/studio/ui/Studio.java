@@ -1304,7 +1304,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
     }
 
     public void about() {
-        HelpDialog help = new HelpDialog(frame);
+        HelpDialog help = new HelpDialog(frame,true);
         Util.centerChildOnParent(help,frame);
         // help.setTitle("About Studio for kdb+");
         help.pack();
