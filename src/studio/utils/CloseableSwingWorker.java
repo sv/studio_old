@@ -10,7 +10,7 @@ import javax.swing.SwingWorker;
 
 /**
  *
- * @author vidyser
+ * @author svidyuk
  */
 public abstract class CloseableSwingWorker<T,V> extends SwingWorker<T, V> implements Closeable {
 

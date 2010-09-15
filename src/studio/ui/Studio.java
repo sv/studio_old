@@ -28,12 +28,13 @@ import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.net.URI;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import org.netbeans.editor.example.QKit;
 import org.netbeans.editor.ext.q.QSettingsInitializer;
-import studio.utils.BrowserLaunch;
-import studio.utils.SwingWorker;
+
 
 public class Studio extends JPanel implements Observer,WindowListener {
     static {
@@ -82,6 +83,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
     private UserAction executeAction;
     private UserAction executeCurrentLineAction;
     private UserAction refreshAction;
+    private UserAction subscribeAction;
     private UserAction aboutAction;
     private UserAction exitAction;
     private UserAction toggleDividerOrientationAction;
@@ -1203,7 +1205,8 @@ public class Studio extends JPanel implements Observer,WindowListener {
                                     null) {
             public void actionPerformed(ActionEvent e) {
                 if (worker != null) {
-                    worker.interrupt();
+//                    worker.interrupt();
+                    worker.cancel(true);
                     stopAction.setEnabled(false);
                     textArea.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
@@ -1263,6 +1266,148 @@ public class Studio extends JPanel implements Observer,WindowListener {
                 refreshQuery();
             }
         };
+        subscribeAction = new UserAction("Subscribe", getImage(Config.imageBase2 + "feed.png"), "Subscribe to realtime table", WIDTH, null) {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (server != null) {
+                    final kx.c c = ConnectionPool.getInstance().leaseConnection(server);
+
+                    try {
+                        ConnectionPool.getInstance().checkConnected(c);
+                        final JDialog dialog = new JDialog(frame, true);
+                        SwingWorker worker = new SwingWorker() {
+
+                            @Override
+                            protected Object doInBackground() throws Exception {
+                                try {
+                                    c.k(new K.KCharacterVector(".u.t"));
+                                    return c.getResponse();
+                                } catch (Throwable ex) {
+                                    throw new Exception(ex);
+                                }
+                            }
+
+                            @Override
+                            protected void done() {
+                                dialog.setVisible(false);
+                                dialog.dispose();
+                                try {
+                                    Object res = get();
+                                    if (res instanceof K.KSymbolVector) {
+                                        subscribeFeed(res, c);
+                                    }
+                                } catch (Throwable ex) {
+                                    JOptionPane.showMessageDialog(frame, "Nothing to subscribe for!");
+                                }
+
+                            }
+                        };
+                        JProgressBar pb = new JProgressBar();
+                        pb.setIndeterminate(true);
+                        dialog.add(pb);
+                        worker.execute();
+                        dialog.pack();
+                        dialog.setLocationRelativeTo(null);
+                        //the dialog will be visible until the SwingWorker is done
+                        dialog.setVisible(true);
+                    } catch (Throwable th) {
+
+                        if (c != null) {
+                            ConnectionPool.getInstance().freeConnection(server, c);
+                        }
+                        JOptionPane.showMessageDialog(frame,
+                                "An Exception occurred\n\nDetails - \n\n" + th.toString(),
+                                "Studio for kdb+",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+
+            private void subscribeFeed(Object res, final c c) throws Throwable {
+                K.KSymbolVector tables = (K.KSymbolVector) res;
+                final String table = (String) JOptionPane.showInputDialog(frame, "Select table to subscribe", "Subscribe to table",
+                        JOptionPane.YES_NO_OPTION,
+                        null, (Object[]) tables.getArray(), null);
+                if (table == null) {
+                    return;
+                }
+                final JDialog dialog = new JDialog(frame, true);
+                SwingWorker worker = new SwingWorker() {
+
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        try {
+                            c.k(new K.KCharacterVector(".u.sub[`" + table + ";`]"));
+                            K.KBase r = c.getResponse();
+                            if (!(r instanceof K.KList)) {
+                                System.out.println(r);
+                                return null;
+                            }
+                            System.out.println("subscribed");
+                            Object data = ((K.KList) r).at(1);
+                            return data;
+                        } catch (Throwable ex) {
+                            throw new Exception(ex);
+                        }
+                    }
+
+                    @Override
+                    protected void done() {
+                        dialog.setVisible(false);
+                        dialog.dispose();
+                        Object data = null;
+                        try {
+                            data = get();
+                        } catch (InterruptedException ex) {
+                            JOptionPane.showMessageDialog(frame, "Error while subscribing!\n" + ex);
+                        } catch (ExecutionException ex) {
+                            JOptionPane.showMessageDialog(frame, "Error while subscribing!\n" + ex);
+                        }
+                        if (data != null && FlipTableModel.isTable(data)) {
+                            QGrid grid = new QGrid((K.KBase) data);
+                            final SubscribeWorker worker = new SubscribeWorker(grid, c, table);
+                            worker.execute();
+                            JFrame frm = new JFrame();
+                            WindowAdapter closeAdapter = new WindowAdapter() {
+
+                                @Override
+                                public void windowClosing(WindowEvent e) {
+                                    try {
+                                        worker.usub();
+                                        worker.cancel(true);                                        
+                                    } catch (Throwable ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            };
+                            frame.addWindowListener(closeAdapter);
+                            frm.addWindowListener(closeAdapter);
+                            frm.setTitle(table + "@" + server);
+                            frm.setIconImage(getImage(Config.imageBase + "32x32/dot-chart.png").getImage());
+                            frm.add(grid);
+                            frm.pack();
+                            frm.setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(frame, "Error while subscribing!Invalid response.\n");
+                        }
+
+
+                    }
+                };
+
+                JProgressBar pb = new JProgressBar();
+                pb.setIndeterminate(true);
+                dialog.add(pb);
+                worker.execute();
+                dialog.pack();
+                dialog.setLocationRelativeTo(null);
+                //the dialog will be visible until the SwingWorker is done
+                dialog.setVisible(true);
+
+            }
+        };
 
         aboutAction = new UserAction(I18n.getString("About"),
                                      Util.getImage(Config.imageBase2 + "about.png"),
@@ -1295,7 +1440,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
             
             public void actionPerformed(ActionEvent e) {
                     try {
-                        BrowserLaunch.openURL("https://code.kx.com/trac/wiki/Reference/");
+                        Desktop.getDesktop().browse(new URI("https://code.kx.com/trac/wiki/Reference/"));
                     } catch (Exception ex) {
                        JOptionPane.showMessageDialog(null, "Error attempting to launch web browser:\n" + ex.getLocalizedMessage());
                     }
@@ -1692,6 +1837,8 @@ public class Studio extends JPanel implements Observer,WindowListener {
             toolbar.add(replaceAction);
 
             toolbar.addSeparator();
+            toolbar.add(subscribeAction);
+            toolbar.addSeparator();
             toolbar.add(codeKxComAction);
 
             for (int j = 0;j < toolbar.getComponentCount();j++) {
@@ -2064,7 +2211,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
             boolean cancelled = false;
             long execTime=0;
             public void interrupt() {
-                super.interrupt();
+                super.cancel(true);
 
                 cancelled = true;
 
@@ -2073,7 +2220,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
                 cleanup();
             }
 
-            public Object construct() {
+            public Object doInBackground() {
                 try {
                     this.s = server;
                     c = ConnectionPool.getInstance().leaseConnection(s);
@@ -2091,7 +2238,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
                 return null;
             }
 
-            public void finished() {
+            public void done() {
                 if (!cancelled) {
                     if (exception != null)
                         try {
@@ -2181,7 +2328,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
             }
         };
 
-        worker.start();
+        worker.execute();
     }
     private SwingWorker worker;
     
