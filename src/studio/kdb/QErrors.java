@@ -25,7 +25,7 @@ public class QErrors {
         map.put("glim","`g# limit, kdb+ currently limited to 99 concurrent `g#'s ");
         map.put("length","incompatible lengths, e.g. 1 2 3 4 + 1 2 3");
         map.put("limit","tried to generate a list longer than 2,000,000,000");
-        map.put("loop","dependency loop");
+        map.put("loop","dependency loop, e.g. a::a");
         map.put("mismatch","columns that can't be aligned for R,R or K,K ");
         map.put("Mlim","more than 999 nested columns in splayed tables");
         map.put("nyi","not yet implemented - suggests the\noperation you are tying to do makes sense\nbut it has not yet been implemented");
@@ -51,5 +51,13 @@ public class QErrors {
         map.put("s-fail","cannot apply `s# to data (not ascending values) , e.g `s#2 1");
         map.put("noamend","can't change global state inside an amend");
         map.put("elim","more than 57 distinct enumerations");
+        map.put("view","Trying to re-assign a view to something else");
+        map.put("unmappable","when saving partitioned data,each column must be mappable. () and (\"\";\"\";\"\") is ok");
+        map.put("part","something wrong with the partitions in the hdb");
+        map.put("parse","invalid syntax");
+        map.put("arch","attempt to load file of wrong endian format,`:test set til 100;-17!`:test");
+        map.put("badtail","incomplete transaction at end of file, get good (count;length) with -11!(-2;`:file)");
+        map.put("from","Badly formed select statement, e.g. select price trade");
+
     }
 }

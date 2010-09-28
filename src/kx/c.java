@@ -31,7 +31,8 @@ import javax.swing.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.LinkedList;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import studio.kdb.Config;
 
 public class c {
@@ -103,7 +104,7 @@ public class c {
             super(s);
         }
     }
-    private final java.util.List responses = java.util.Collections.synchronizedList(new LinkedList());
+    private final BlockingQueue responses = new LinkedBlockingQueue();
 
     boolean closed = true;
 
@@ -112,18 +113,7 @@ public class c {
     }
 
     public K.KBase getResponse() throws Throwable {
-        Object obj;
-
-        synchronized (responses) {
-            if (responses.size() == 0)
-                try {
-                    responses.wait();
-                }
-                catch (InterruptedException e) {
-                }
-
-            obj = responses.remove(0);
-        }
+        Object obj= responses.take();
 
         if (obj instanceof Throwable)
             throw (Throwable) obj;
@@ -147,11 +137,7 @@ public class c {
                         o = t;
                         close();
                     }
-
-                    synchronized (responses) {
-                        responses.add(o);
-                        responses.notify();
-                    }
+                    responses.add(o);
                 }
             }
         };

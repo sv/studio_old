@@ -6,6 +6,8 @@
 
 package studio.ui;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import studio.kdb.*;
 import studio.utils.OSXAdapter;
 import javax.swing.event.UndoableEditEvent;
@@ -34,6 +36,7 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import org.netbeans.editor.example.QKit;
 import org.netbeans.editor.ext.q.QSettingsInitializer;
+import studio.utils.CloseableSwingWorker;
 
 
 public class Studio extends JPanel implements Observer,WindowListener {
@@ -63,6 +66,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
     private UserAction closeFileAction;
     private UserAction newFileAction;
     private UserAction openFileAction;
+    private UserAction configEditorAction;
     private UserAction openInExcel;
     private UserAction codeKxComAction;
     private UserAction openFileInNewWindowAction;
@@ -1079,7 +1083,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
                 f.setModal(true);
                 f.pack();
                 Util.centerChildOnParent(f,frame);
-                f.show();
+                f.setVisible(true);
 
                 if (f.getResult() == DialogResult.ACCEPTED) {
                     if (stopAction.isEnabled())
@@ -1205,14 +1209,29 @@ public class Studio extends JPanel implements Observer,WindowListener {
                                     null) {
             public void actionPerformed(ActionEvent e) {
                 if (worker != null) {
-//                    worker.interrupt();
-                    worker.cancel(true);
+                    try {
+                        worker.close();
+                    } catch (IOException ex) {
+                        // handled in close code
+                    }
                     stopAction.setEnabled(false);
                     textArea.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
             }
         };
 
+        configEditorAction = new UserAction(I18n.getString("EditConfig"), 
+                                            getImage(Config.imageBase2 + "chart.png"),
+                                            "Edit config",
+                                            new Integer(KeyEvent.VK_E),
+                                            null) {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ConfigDialog d = new ConfigDialog(frame, enabled);
+                d.setVisible(true);
+            }
+        };
 
         openInExcel = new UserAction(I18n.getString("OpenInExcel"),
                                      getImage(Config.imageBase + "excel_icon.gif"),
@@ -1542,6 +1561,8 @@ public class Studio extends JPanel implements Observer,WindowListener {
         menu.add(new JMenuItem(closeFileAction));
 
         menu.addSeparator();
+        menu.add(new JMenuItem(configEditorAction));
+        menu.addSeparator();
 //        menu.add(new JMenuItem(importAction));
         menu.add(new JMenuItem(openInExcel));
         menu.addSeparator();
@@ -1590,8 +1611,6 @@ public class Studio extends JPanel implements Observer,WindowListener {
         menu.addSeparator();
         menu.add(new JMenuItem(findAction));
         menu.add(new JMenuItem(replaceAction));
-//        menu.addSeparator();
-//        menu.add(new JMenuItem(editFontAction));
         menubar.add(menu);
 
         menu = new JMenu(I18n.getString("Server"));
@@ -1626,7 +1645,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
                                            if (f.getResult() == DialogResult.ACCEPTED) {
                                                clone = f.getServer();
                                                Config.getInstance().addServer(clone);
-                                               //ebuildToolbar();
+                                               //rebuildToolbar();
                                                setServer(clone);
                                                ConnectionPool.getInstance().purge(clone); //?
                                                windowListMonitor.fireMyEvent(new WindowListChangedEvent(this));
@@ -2203,14 +2222,16 @@ public class Studio extends JPanel implements Observer,WindowListener {
 
         textArea.setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
         tabbedPane.removeAll();
-        worker = new SwingWorker() {
+        worker = new CloseableSwingWorker() {
             Server s = null;
             c c = null;
             K.KBase r = null;
             Throwable exception;
             boolean cancelled = false;
             long execTime=0;
-            public void interrupt() {
+            
+            @Override
+            public void close() {
                 super.cancel(true);
 
                 cancelled = true;
@@ -2330,7 +2351,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
 
         worker.execute();
     }
-    private SwingWorker worker;
+    private CloseableSwingWorker worker;
     
     public void windowClosing(WindowEvent e) {
         if (quitWindow())
