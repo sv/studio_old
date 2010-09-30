@@ -6,6 +6,8 @@
 
 package studio.kdb;
 
+import org.netbeans.editor.ext.q.QSyntax;
+
 public class ReloadQKeywords {
     public ReloadQKeywords(final Server server) {
         if (server != null) {
@@ -28,10 +30,11 @@ public class ReloadQKeywords {
                         if (c != null)
                             ConnectionPool.getInstance().freeConnection(server,c);
                     }
-                    if (r instanceof K.KSymbolVector)
+                    if (r instanceof K.KSymbolVector){
                         Config.getInstance().saveQKeywords((String[]) ((K.KSymbolVector) r).getArray());
+                        QSyntax.updateKeywords(Config.getInstance().getQKeywords());
+                    }
                 }
-                ;
             };
             Thread t = new Thread(runner);
             t.setName("QKeywordReloader");

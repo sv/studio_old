@@ -6,29 +6,56 @@
 
 package org.netbeans.editor.ext.q;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.netbeans.editor.Syntax;
 import org.netbeans.editor.TokenID;
 
 public class QSyntax extends Syntax
 {
-    private Map map;
+    private static Map map;
 
     private void initMap()
     {
-        map=new HashMap();
+        map=new ConcurrentHashMap<String,Object>();
         Object o=new Object();
 
         String[] keywords=new String[]
         {
-            "ej","aj0","insert","acos","exp","wavg","avgs","log","sin","cos","sqrt","exec","abs","neg","not","null","floor","string","reciprocal","ceiling","signum","div","mod","xbar","xlog","and","or","each","mmu","lsq","inv","md5","ltime","gtime","count","first","var","dev","med","cov","cor","all","any","rand","sums","prds","mins","maxs","fills","deltas","ratios","differ","prev","next","rank","reverse","iasc","idesc","asc","desc","msum","mcount","mavg","mdev","xrank","mmin","mmax","xprev","rotate","list","distinct","group","where","flip","type","key","til","get","value","attr","cut","set","upsert","raze","union","inter","except","cross","ss","sv","vs","sublist","read0","read1","hopen","hclose","hdel","hsym","hcount","peach","system","ltrim","rtrim","trim","lower","upper","ssr","view","tables","views","cols","xcols","keys","xkey","xcol","xasc","xdesc","fkeys","meta","uj","ij","lj","pj","aj","asof","fby","ungroup","xgroup","plist","enlist","txf","save","load","rsave","rload","show","csv","parse","eval","over","scan","select","from","where","within","update","in","delete","sum","avg","min","max","like","last","by","do","while","if","getenv","xexp"
+            "aj0","insert","acos","exp","wavg","avgs","log","sin","cos",
+            "sqrt","exec","abs","neg","not","null","floor","string","reciprocal",
+            "ceiling","signum","div","mod","xbar","xlog","and","or","each","mmu",
+            "lsq","inv","md5","ltime","gtime","count","first","var","dev","med",
+            "cov","cor","all","any","rand","sums","prds","mins","maxs","fills",
+            "deltas","ratios","differ","prev","next","rank","reverse","iasc",
+            "idesc","asc","desc","msum","mcount","mavg","mdev","xrank","mmin",
+            "mmax","xprev","rotate","list","distinct","group","where","flip",
+            "type","key","til","get","value","attr","cut","set","upsert","raze",
+            "union","inter","except","cross","ss","sv","vs","sublist","read0",
+            "read1","hopen","hclose","hdel","hsym","hcount","peach","system",
+            "ltrim","rtrim","trim","lower","upper","ssr","view","tables",
+            "views","cols","xcols","keys","xkey","xcol","xasc","xdesc","fkeys",
+            "meta","uj","ij","lj","pj","aj","asof","fby","ungroup","xgroup",
+            "plist","enlist","txf","save","load","rsave","rload","show","csv",
+            "parse","eval","over","scan","select","from","where","within",
+            "update","in","delete","sum","avg","min","max","like","last","by",
+            "do","while","if","getenv","setenv","xexp",
+            "prd","wsum","exit","bin",
+            "asin","atan","tan",
         };
 
         //      String [] keywords= Config.getInstance().getQKeywords();
         for(int i=0;i<keywords.length;i++)
         {
             map.put(keywords[i],o);
+        }
+    }
+
+    public static void updateKeywords(String[] keywords) {
+        for (String k : keywords) {
+            if (!map.containsKey(k)) {
+                map.put(k, new Object());
+            }
         }
     }
 
