@@ -2234,14 +2234,12 @@ public class Studio extends JPanel implements Observer,WindowListener {
             long execTime=0;
             
             @Override
-            public void close() {
-                super.cancel(true);
-
+            public void close() {              
                 cancelled = true;
-
                 if (c != null)
                     c.close();
                 cleanup();
+                super.cancel(true);
             }
 
             public Object doInBackground() {
