@@ -6,6 +6,18 @@
 
 package studio.kdb;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.InstanceCreator;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import studio.core.DefaultAuthenticationMechanism;
 import java.io.*;
 import java.util.*;
@@ -13,117 +25,217 @@ import java.util.List;
 import java.text.NumberFormat;
 import java.text.DecimalFormat;
 import java.awt.*;
+import java.lang.reflect.Type;
 
 public class Config
 {
+
+    static  class IConfig {
+        private String encoding="UTF-8";
+        private Font defaultFont= new Font("Monospaced", Font.PLAIN, 14);
+        private String decimalFormat="#.#######";
+        private Set<String> qkeywords;
+        private Date licenseAccepted;
+        private String lruServer;
+        private String lookandfeel;
+        private boolean subscriptionEnabled;
+        private boolean dictAsTable;
+        private Set<String> mrufiles=new HashSet<String>();
+        private Map<String,Server> servers=new HashMap<String,Server>();
+        private Map<String,Color> tokens=new HashMap<String,Color>();
+
+        public Map<String, Color> getTokens() {
+            return tokens;
+        }
+
+        public void setTokens(Map<String, Color> tokens) {
+            this.tokens = tokens;
+        }
+
+        public String getDecimalFormat() {
+            return decimalFormat;
+        }
+
+        public void setDecimalFormat(String decimalFormat) {
+            this.decimalFormat = decimalFormat;
+        }
+
+        public Font getDefaultFont() {
+            return defaultFont;
+        }
+
+        public void setDefaultFont(Font defaultFont) {
+            this.defaultFont = defaultFont;
+        }
+
+        public boolean isDictAsTable() {
+            return dictAsTable;
+        }
+
+        public void setDictAsTable(boolean dictAsTable) {
+            this.dictAsTable = dictAsTable;
+        }
+
+        public String getEncoding() {
+            return encoding;
+        }
+
+        public void setEncoding(String encoding) {
+            this.encoding = encoding;
+        }
+
+        public Date getLicenseAccepted() {
+            return licenseAccepted;
+        }
+
+        public void setLicenseAccepted(Date licenseAccepted) {
+            this.licenseAccepted = licenseAccepted;
+        }
+
+        public String getLookandfeel() {
+            return lookandfeel;
+        }
+
+        public void setLookandfeel(String lookandfeel) {
+            this.lookandfeel = lookandfeel;
+        }
+
+        public String getLruServer() {
+            return lruServer;
+        }
+
+        public void setLruServer(String lruServer) {
+            this.lruServer = lruServer;
+        }
+
+        public Set<String> getMrufiles() {
+            return mrufiles;
+        }
+
+        public void setMrufiles(Set<String> mrufiles) {
+            this.mrufiles = mrufiles;
+        }
+
+        public Set<String> getQkeywords() {
+            return qkeywords;
+        }
+
+        public void setQkeywords(Set<String> qkeywords) {
+            this.qkeywords = qkeywords;
+        }
+
+        public Map<String,Server> getServers() {
+            return servers;
+        }
+
+        public void setServers(Map<String,Server> servers) {
+            this.servers = servers;
+        }
+
+        public boolean isSubscriptionEnabled() {
+            return subscriptionEnabled;
+        }
+
+        public void setSubscriptionEnabled(boolean subscriptionEnabled) {
+            this.subscriptionEnabled = subscriptionEnabled;
+        }
+    }
+
+    class FontInstanceCreator implements InstanceCreator<Font> {
+
+        public Font createInstance(Type type) {
+            return new Font("Monospaced", Font.PLAIN, 14);
+        }
+    }
+ 
+    class ColorSerializer implements JsonSerializer<Color>, JsonDeserializer<Color>, InstanceCreator<Color> {
+
+        public JsonElement serialize(Color src, Type typeOfSrc, JsonSerializationContext context) {
+            return new JsonPrimitive(src.getRGB());
+        }
+
+        public Color deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+                throws JsonParseException {
+            return Color.decode(json.getAsString());
+        }
+        public Color createInstance(Type type) {
+            return Color.black;
+        }
+    }
+
+
+    public static void main(String[] args){
+        Config c=Config.getInstance();
+        IConfig ic=new IConfig();
+        ic.setEncoding(c.getEncoding());
+        ic.setDefaultFont(c.getFont());
+        ic.setDecimalFormat(((DecimalFormat)c.getNumberFormat()).toLocalizedPattern());
+        ic.setQkeywords(new HashSet<String>(Arrays.asList(c.getQKeywords())));
+        ic.setSubscriptionEnabled(c.isSubsciptionEnabled());
+        ic.setDictAsTable(c.isDictAsTable());
+        ic.setMrufiles(new HashSet<String>(Arrays.asList(c.getMRUFiles())));
+        ic.setLicenseAccepted(c.getLicenseAcceptedDate());
+        Map<String,Server> map=new HashMap<String, Server>();
+        for(Server next:c.getServers()){
+            map.put(next.getName(),next);
+        }
+        ic.setServers(map);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        System.out.println(gson.toJson(ic));
+    }
     public static String imageBase="/de/skelton/images/";
     public static String imageBase2="/de/skelton/utils/";
     private static String path;
-    private static String filename="studio.properties";
+    private static String filename="studio.txt";
     private static String absoluteFilename;
     private static String version="1.1";
-    private Properties p = null;
-    private static Config instance;
-    private static NumberFormat formatter= null;
+    private static Config instance=new Config();
+    private IConfig iconfig;
 
     private Config()
     {
-        init();
+        this.iconfig=init();
     }
 
     public Font getFont()
     {
-        Font f= null;
-
-        if( p != null)
-        {
-            String name=    p.getProperty("font.name");
-            String size=    p.getProperty("font.size");
-            int s= 14;
-            if( size != null)
-                s= Integer.parseInt(size);
-            String n= "Monospaced";
-            if( name != null)
-                n= name;
-
-            f= new Font(n, Font.PLAIN, s);
-
-            if( f == null)
-                f= new Font("Monospaced", Font.PLAIN, 14);
-            
-            setFont(f);
-        }
-
-        return f;
+        return iconfig.getDefaultFont();
     }
 
     public String getEncoding()
     {
-        String s="UTF-8";
-
-        if( p != null)
-            s= p.getProperty("encoding","UTF-8");
-
-        return s;//"GBK";
+        return iconfig.getEncoding();
     }
 
     public void setFont(Font f)
     {
-        if( p != null)
-        {
-            p.setProperty("font.name", f.getFamily());
-            p.setProperty("font.size", ""+f.getSize());
-            save();
-        }
+        iconfig.setDefaultFont(f);
+        save();
     }
     
     public Color getColorForToken(String tokenType, Color defaultColor)
     {
-        Color c= Color.black;
-
-        if( p != null)
-        {
-            String s= p.getProperty("token."+tokenType);
-            if(s != null){
-                c= new Color(Integer.parseInt(s.substring(0,2),16),
-                        Integer.parseInt(s.substring(2,4),16),
-                        Integer.parseInt(s.substring(4,6),16));
-            }
-            else {
-                c= defaultColor;
-                setColorForToken(tokenType,c);
-            }
+        Color c= iconfig.getTokens().get(tokenType);
+        if (c==null) {
+            c=defaultColor;
+            setColorForToken(tokenType,c);
         }
-
         return c;
     }
 
     public void setColorForToken(String tokenType, Color c)
     {
-        if( p != null)
-        {
-            p.setProperty("token."+tokenType, Integer.toHexString(c.getRGB()).substring(2));
+        iconfig.getTokens().put(tokenType, c);
             save();
-        }
     }
     
     public synchronized NumberFormat getNumberFormat()
     {
-        String key= null;
-
-        if( p != null)
-        {
-            key= p.getProperty( "DecimalFormat","#.#######");
-        }
-
-        return new DecimalFormat(key);
+        return new DecimalFormat(iconfig.getDecimalFormat());
     }
 
     public void setNumberFormat(String format){
-        if( p != null)
-        {
-            p.put("DecimalFormat",format);
-        }
+       iconfig.setDecimalFormat(format);
         save();
     }
 
@@ -137,8 +249,9 @@ public class Config
         return instance;
     }
 
-    private void init()
+    private IConfig init()
     {
+        IConfig r=null;
         path= System.getProperties().getProperty( "user.home");
 
         path= path + "/.studioforkdb";
@@ -156,193 +269,77 @@ public class Config
         absoluteFilename= path + "/" + filename;
 
         String candidate= absoluteFilename;
+        try {
+            GsonBuilder gsb=new GsonBuilder();
+            gsb.registerTypeAdapter(Font.class, new FontInstanceCreator());
+            gsb.registerTypeAdapter(Color.class, new ColorSerializer());
 
-        p = new Properties();
-
-        boolean finished= false;
-
-        while( !finished)
-        {
-            InputStream in = null;
-
-            try
-            {
-                in = new BufferedInputStream(new FileInputStream(candidate),64*1024);
-
-                try
-                {
-                    p.load(in);
-                    String v= p.getProperty( "version");
-                    if( (v == null) || (!version.equals( v)))
-                    {
-                        p.clear();
-                    }
-                }
-                catch (IOException e)
-                {
-                }
-                finally
-                {
-                    finished= true;
-                }
-            }
-            catch (FileNotFoundException e)
-            {
-                if( candidate.equals( absoluteFilename))
-                {
-                    candidate= filename;
-                }
-                else {
-                    finished= true;
-                }
-            }
-            finally
-            {
-                try
-                {
-                    if (in != null)
-                    {
-                        in.close();
-                    }
-                }
-                catch (IOException e)
-                {
-                }
-            }
+            Gson gson=gsb.create();
+            r = gson.fromJson(new FileReader(candidate), IConfig.class);
+        } catch (Exception ex) {
+           ex.printStackTrace();
         }
+        if(r==null) r=new IConfig();
+        return r;
     }
 
 
     public void save()
     {
-        FileOutputStream out = null;
-        try
-        {
-            out = new FileOutputStream(absoluteFilename);
-            try
-            {
-                p.put( "version", version);
-                p.store(out, "Auto-generated by Studio for kdb+");
+         GsonBuilder gsb=new GsonBuilder().setPrettyPrinting();
+         gsb.registerTypeAdapter(Color.class, new ColorSerializer());
+        Gson gson = gsb.create();
+            try {
+                FileWriter f=new FileWriter(absoluteFilename);
+                gson.toJson(iconfig, f);
+                f.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
             }
-            catch (IOException e)
-            {
-                e.printStackTrace();  //To change body of catch statement use Options | File Templates.
-            }
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();  //To change body of catch statement use Options | File Templates.
-        }
-        finally
-        {
-            try
-            {
-                if (out != null)
-                {
-                    out.close();
-                }
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();  //To change body of catch statement use Options | File Templates.
-            }
-        }
+       
     }
 
     public String[] getQKeywords()
     {
-        String key= null;
-
-        if( p != null)
-        {
-            key= p.getProperty( "qkeywords");
-        }
-
-        Vector keywords= new Vector();
-
-        if( key != null)
-        {
-            StringTokenizer t= new StringTokenizer( key, ",");
-            while( t.hasMoreTokens())
-            {
-                String token= t.nextToken().trim();
-
-                if( token.length() > 0)
-                {
-                    if( ! keywords.contains( token))
-                    {
-                        keywords.add(token);
-                    }
-                }
-            }
-        }
-
-        return (String []) keywords.toArray( new String[0]);
+        return iconfig.getQkeywords().toArray(new String[0]);
     }
 
     public String getLRUServer()
     {
-        String key= null;
-
-        if( p != null)
-        {
-            key= p.getProperty( "lruServer");
-        }
-
-        return key;
+        return iconfig.getLruServer();
     }
 
     public void setLRUServer(Server s)
     {
-        if( s != null)
-        {
-            if( p != null)
-            {
-                p.put("lruServer", s.getName());
-            }
+        iconfig.setLruServer(s.getName());
 
             save();
-        }
+       
     }
 
 
     public void saveQKeywords( String [] keywords)
     {
-        StringBuffer key= new StringBuffer();
-
-        for( int i=0; i < keywords.length; i++)
-        {
-            if( i > 0)
-            {
-                key.append( ",");
-            }
-
-            key.append( keywords[i].trim());
-        }
-
-        if( p != null)
-        {
-            p.put("qkeywords", key.toString());
-        }
+        iconfig.setQkeywords(new HashSet<String>(Arrays.asList(keywords)));
 
         save();
     }
     
     public void setAcceptedLicense(Date d)
     {
-        p.put("licenseAccepted", d.toString());
+        iconfig.setLicenseAccepted(d);
         save();
     }
-
+    public Date getLicenseAcceptedDate(){
+        return iconfig.getLicenseAccepted();
+    }
     public boolean getAcceptedLicense()
     {
-        String s=(String) p.get("licenseAccepted");
-        if(s == null)
-            return false;
-        if( s.length()==0)
+        Date d=iconfig.getLicenseAccepted();
+        if(d == null)
             return false;
         
-        if(Lm.buildDate.after(new Date(s)))
+        if(Lm.buildDate.after(d))
             return false;
         
         return true;
@@ -369,292 +366,83 @@ public class Config
 
     public String [] getMRUFiles()
     {
-        String mru= null;
-
-        if( p != null)
-        {
-            mru= p.getProperty( "mrufiles");
-        }
-
-        Vector mruFiles= new Vector();
-
-        if( mru != null)
-        {
-            StringTokenizer t= new StringTokenizer( mru, ",");
-            while( t.hasMoreTokens())
-            {
-                String token= t.nextToken().trim();
-
-                if( token.length() > 0)
-                {
-                    if( ! mruFiles.contains( token))
-                    {
-                        mruFiles.add(token);
-                    }
-                }
-            }
-        }
-
-        return (String []) mruFiles.toArray( new String[0]);
+        return iconfig.getMrufiles().toArray(new String[0]);
     }
 
 
     public void saveMRUFiles( String [] mruFiles)
     {
-        StringBuffer mru= new StringBuffer();
-
-        for( int i=0; i < (mruFiles.length>9?9:mruFiles.length); i++)
-        {
-            if( i > 0)
-            {
-                mru.append( ",");
-            }
-
-            mru.append( mruFiles[i].trim());
-        }
-
-        if( p != null)
-        {
-            p.put("mrufiles", mru.toString());
-        }
+        iconfig.setMrufiles(new HashSet<String>(Arrays.asList(mruFiles)));
 
         save();
     }
 
     public String getLookAndFeel()
-    {
-        String lf= null;
-
-        if( p != null)
-        {
-            lf= p.getProperty( "lookandfeel");
-        }
-
-        return lf;
+    {        
+        return iconfig.getLookandfeel();
     }
 
     public void setLookAndFeel( String lf)
     {
-        if( p != null)
-        {
-            p.put("lookandfeel", lf);
-        }
-
+       iconfig.setLookandfeel(lf);
         save();
     }
 
         public boolean isSubsciptionEnabled() {
-        boolean sub = false;
-
-        if (p != null) {
-            sub = Boolean.valueOf(p.getProperty("subsciption", "false"));
-        }
-
-        return sub;
+        
+        return iconfig.isSubscriptionEnabled();
     }
 
     public void setSubscriptionEnabled(boolean sub) {
-        if (p != null) {
-            p.put("subsciption", String.valueOf(sub));
-        }
-
+       iconfig.setSubscriptionEnabled(sub);
         save();
     }
 
     public boolean isDictAsTable() {
-        boolean dt = false;
 
-        if (p != null) {
-            dt = Boolean.valueOf(p.getProperty("dict_as_table", "false"));
-        }
-
-        return dt;
+        return iconfig.isDictAsTable();
     }
 
     public void setDictAsTable(boolean dt) {
-        if (p != null) {
-            p.put("dict_as_table", String.valueOf(dt));
-        }
+    iconfig.setDictAsTable(dt);
 
         save();
     }
 
     public Server getServer( String server)
     {
-        Server [] servers= getServers();
-        for( int i= 0; i < servers.length; i++)
-        {
-            if( server.equals( servers[i].getName()))
-            {
-                return servers[i];
-            }
-        }
-
-        return null;
+        return iconfig.getServers().get(server);
     }
 
     public String[] getServerNames()
     {
-        Server [] servers= getServers();
-        String [] names= new String[ servers.length];
-        for( int i=0;i<servers.length;i++)
-        {
-            names[i]=servers[i].getName();
-        }
-
-        return names;
+        return iconfig.getServers().keySet().toArray(new String[iconfig.getServers().size()]);
     }
 
     public Server[] getServers()
     {
-        ArrayList list = new ArrayList();
-
-        String servers = p.getProperty("Servers");
-
-        if (servers != null)
-        {
-            StringTokenizer t = new StringTokenizer(servers, ",");
-
-            while (t.hasMoreTokens())
-            {
-                String name = t.nextToken().trim();
-
-                String host = p.getProperty( "server."+name + "." + "host");
-                int port = Integer.parseInt( p.getProperty( "server."+name + "." + "port", "-1"));
-                String username = p.getProperty( "server."+name + "." + "user");
-                String password = p.getProperty( "server."+name + "." + "password");
-                String backgroundColor= p.getProperty( "server."+name + "." + "backgroundColor", "FFFFFF");
-                String authenticationMechanism = p.getProperty( "server."+name + "." + "authenticationMechanism",new DefaultAuthenticationMechanism().getMechanismName());
-
-                Color c= new Color(Integer.parseInt(backgroundColor.substring(0,2),16),
-                        Integer.parseInt(backgroundColor.substring(2,4),16),
-                        Integer.parseInt(backgroundColor.substring(4,6),16));
-                if( (host != null) || ( port > 0))
-                {
-                    Server server = new Server(name, host, port, username, password,c, authenticationMechanism);
-                    list.add(server);
-                }
-            }
-        }
-
-        return (Server[]) list.toArray(new Server[0]);
+        return iconfig.getServers().values().toArray(new Server[iconfig.getServers().size()]);
     }
 
     public void removeServer(Server server)
     {
-        Server [] servers=getServers();
-
-        ArrayList l= new ArrayList();
-        for( int i= 0; i < servers.length; i ++)
-        {
-            if( ! server.getName().equals( servers[i].getName()))
-            {
-                l.add( servers[i]);
-            }
-        }
-
-        p.remove( "server."+server.getName()+"."+"host");
-        p.remove( "server."+server.getName()+"."+"port");
-        p.remove( "server."+server.getName()+"."+"k4");
-        p.remove( "server."+server.getName()+"."+"user");
-        p.remove( "server."+server.getName()+"."+"password");
-        p.remove( "server."+server.getName()+ "." + "backgroundColor");
-        p.remove( "server."+server.getName()+ "." + "authenticationMechanism");
-
-        setServers( (Server []) l.toArray( new Server[0]));
+        iconfig.getServers().remove(server.getName());
+        save();
     }
 
     public void saveServer(Server server)
     {
-        Server [] servers=getServers();
-
-        ArrayList l= new ArrayList();
-        for( int i= 0; i < servers.length; i ++)
-        {
-            if( ! server.getName().equals( servers[i].getName()))
-            {
-                l.add( servers[i]);
-            }
-            else {
-                l.add( server);
-            }
-        }
-
-        setServers( (Server []) l.toArray( new Server[0]));
+        iconfig.getServers().put(server.getName(),server);
+        save();
     }
 
-    private void setServerDetails( Server server)
-    {
-        String name = server.getName();
-
-        p.setProperty( "server."+name + "." + "host", server.getHost());
-        p.setProperty( "server."+name + "." + "port", "" + server.getPort());
-        p.setProperty( "server."+name + "." + "user", "" + server.getUsername());
-        p.setProperty( "server."+name + "." + "password", "" + server.getPassword());
-        p.setProperty( "server."+name + "." + "backgroundColor", "" + Integer.toHexString(server.getBackgroundColor().getRGB()).substring(2));
-        p.setProperty( "server."+name + "." + "authenticationMechanism", server.getAuthenticationMechanism());
-    }
-
+  
     public void addServer(Server server)
     {
-        setServerDetails( server);
-
-        List serverNames= new ArrayList();
-
-        String servers = p.getProperty("Servers", "");
-
-        boolean found = false;
-
-        StringTokenizer t = new StringTokenizer(servers, ",");
-
-        while (t.hasMoreTokens())
-        {
-            String name = t.nextToken().trim();
-            serverNames.add( name);
-        }
-
-        if( !serverNames.contains( server.getName()))
-        {
-            serverNames.add( server.getName());
-            Collections.sort( serverNames);
-
-            Iterator i= serverNames.iterator();
-
-            StringBuffer s= new StringBuffer();
-
-            while( i.hasNext())
-            {
-                s.append( (String) i.next());
-                if( i.hasNext())
-                {
-                    s.append( ",");
-                }
-            }
-
-            p.setProperty("Servers", s.toString());
-        }
+       iconfig.getServers().put(server.getName(), server);
 
         save();
     }
 
-    public void setServers(Server[] servers)
-    {
-        String names = "";
-
-        for (int i = 0; i < servers.length; i++)
-        {
-            setServerDetails( servers[i]);
-
-            if (i > 0)
-            {
-                names += ",";
-            }
-
-            names += servers[i].getName().trim();
-        }
-
-        p.setProperty("Servers", names);
-
-        save();
-    }
+  
 }
