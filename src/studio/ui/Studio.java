@@ -2161,62 +2161,71 @@ public class Studio extends JPanel implements Observer,WindowListener {
     }
 
     private void processK4Results(K.KBase r) throws c.K4Exception {
-        if (r != null) {
-            exportAction.setEnabled(true);
+        if (r == null) {
+            return;
+        }
+        exportAction.setEnabled(true);
+        if (r instanceof K.Dict && Config.getInstance().isDictAsTable()) {
+            K.Dict src = (K.Dict) r;
+            K.KSymbolVector kk = new K.KSymbolVector(1);
+            K.KList kv = new K.KList(1);
+            K.KSymbolVector vk = new K.KSymbolVector(1);
+            K.KList vv = new K.KList(1);
+            Array.set(kk.getArray(), 0, "keys");
+            Array.set(kv.getArray(), 0, src.x);
+            Array.set(vk.getArray(), 0, "values");
+            Array.set(vv.getArray(), 0, src.y);
+            K.Flip k = new K.Flip(new K.Dict(kk, kv));
+            K.Flip v = new K.Flip(new K.Dict(vk, vv));
+            r = new K.Dict(k, v);
+        }
+        if (FlipTableModel.isTable(r)) {
+            QGrid grid = new QGrid(r);
+            table = grid.getTable();
 
-            if (FlipTableModel.isTable(r)) {
-                QGrid grid = new QGrid(r);
-                table = grid.getTable();
+            openInExcel.setEnabled(true);
+            //if(grid.getRowCount()<50000)
+            chartAction.setEnabled(true);
+            //else
+            //    chartAction.setEnabled(false);
 
-                openInExcel.setEnabled(true);
-                //if(grid.getRowCount()<50000)
-                chartAction.setEnabled(true);
-                //else
-                //    chartAction.setEnabled(false);              
-
-                TabPanel frame = new TabPanel("Table [" + grid.getRowCount() + " rows] ",
-                                              getImage(Config.imageBase2 + "table.png"),
-                                              grid);
-                frame.setTitle(I18n.getString("Table")+" [" + grid.getRowCount() + " "+I18n.getString("rows")+"] ");
+            TabPanel frame = new TabPanel("Table [" + grid.getRowCount() + " rows] ",
+                    getImage(Config.imageBase2 + "table.png"),
+                    grid);
+            frame.setTitle(I18n.getString("Table") + " [" + grid.getRowCount() + " " + I18n.getString("rows") + "] ");
 //                frame.setBackground( Color.white);
 
-                tabbedPane.addTab(frame.getTitle(),frame.getIcon(),frame.getComponent());
+            tabbedPane.addTab(frame.getTitle(), frame.getIcon(), frame.getComponent());
+        } else {
+            chartAction.setEnabled(false);
+            openInExcel.setEnabled(false);
+            LimitedWriter lm = new LimitedWriter(50000);
+            try {
+                r.toString(lm, true);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (LimitedWriter.LimitException ex) {
             }
-            else {
-                chartAction.setEnabled(false);
-                openInExcel.setEnabled(false);
-                LimitedWriter lm = new LimitedWriter(50000);
-                try {
-                    r.toString(lm,true);
-                }
-                catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                catch (LimitedWriter.LimitException ex) {
-                }
 
-                JEditorPane pane = new JEditorPane("text/plain",lm.toString());
-                pane.setFont(font);
+            JEditorPane pane = new JEditorPane("text/plain", lm.toString());
+            pane.setFont(font);
 
 //pane.setLineWrap( false);
 //pane.setWrapStyleWord( false);
 
-                JScrollPane scrollpane = new JScrollPane(pane,
-                                                         ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-                                                         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            JScrollPane scrollpane = new JScrollPane(pane,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-                TabPanel frame = new TabPanel("Console View ",
-                                              getImage(Config.imageBase2 + "console.png"),
-                                              scrollpane);
+            TabPanel frame = new TabPanel("Console View ",
+                    getImage(Config.imageBase2 + "console.png"),
+                    scrollpane);
 
-                frame.setTitle(I18n.getString("ConsoleView"));
+            frame.setTitle(I18n.getString("ConsoleView"));
 
-                tabbedPane.addTab(frame.getTitle(),frame.getIcon(),frame.getComponent());
-            }
+            tabbedPane.addTab(frame.getTitle(), frame.getIcon(), frame.getComponent());
         }
-        else {
-            // Log that execute was successful
-        }
+
     }
     Server server = null;
 
@@ -2261,73 +2270,74 @@ public class Studio extends JPanel implements Observer,WindowListener {
             }
 
             public void done() {
-                if (!cancelled) {
-                    if (exception != null)
-                        try {
-                            throw exception;
+                if (isCancelled()) {
+                    return;
+                }
+
+                if (exception != null) {
+                    try {
+                        throw exception;
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(frame,
+                                "\nA communications error occurred whilst sending the query.\n\nPlease check that the server is running on " + server.getHost() + ":" + server.getPort() + "\n\nError detail is\n\n" + ex.getMessage() + "\n\n",
+                                "Studio for kdb+",
+                                JOptionPane.ERROR_MESSAGE,
+                                getImage(Config.imageBase + "32x32/error.png"));
+                    } catch (c.K4Exception ex) {
+                        JTextPane pane = new JTextPane();
+                        String hint = QErrors.lookup(ex.getMessage());
+                        if (hint != null) {
+                            hint = "\nStudio Hint: Possibly this error refers to " + hint;
+                        } else {
+                            hint = "";
                         }
-                        catch (IOException ex) {
-                            JOptionPane.showMessageDialog(frame,
-                                                          "\nA communications error occurred whilst sending the query.\n\nPlease check that the server is running on " + server.getHost() + ":" + server.getPort() + "\n\nError detail is\n\n" + ex.getMessage() + "\n\n",
-                                                          "Studio for kdb+",
-                                                          JOptionPane.ERROR_MESSAGE,
-                                                          getImage(Config.imageBase + "32x32/error.png"));
-                        }
-                        catch (c.K4Exception ex) {
-                            JTextPane pane = new JTextPane();
-                            String hint = QErrors.lookup(ex.getMessage());
-                            if (hint != null)
-                                hint = "\nStudio Hint: Possibly this error refers to " + hint;
-                            else
-                                hint = "";
-                            pane.setText("An error occurred during execution of the query.\nThe server sent the response:\n" + ex.getMessage() + hint);
-                            pane.setForeground(Color.RED);
+                        pane.setText("An error occurred during execution of the query.\nThe server sent the response:\n" + ex.getMessage() + hint);
+                        pane.setForeground(Color.RED);
 
-                            JScrollPane scrollpane = new JScrollPane(pane);
+                        JScrollPane scrollpane = new JScrollPane(pane);
 
-                            TabPanel frame = new TabPanel("Error Details ",
-                                                          getImage(Config.imageBase2 + "error.png"),
-                                                          scrollpane);
-                            frame.setTitle("Error Details ");
+                        TabPanel frame = new TabPanel("Error Details ",
+                                getImage(Config.imageBase2 + "error.png"),
+                                scrollpane);
+                        frame.setTitle("Error Details ");
 
-                            tabbedPane.addTab(frame.getTitle(),frame.getIcon(),frame.getComponent());
+                        tabbedPane.addTab(frame.getTitle(), frame.getIcon(), frame.getComponent());
 
                         //            tabbedPane.setSelectedComponent(resultsTabbedPane);
-                        }
-                        catch (java.lang.OutOfMemoryError ex) {
-                            JOptionPane.showMessageDialog(frame,
-                                                          "\nOut of memory whilst communicating with " + server.getHost() + ":" + server.getPort() + "\n\nThe result set is probably too large.\n\nTry increasing the memory available to studio through the command line option -J -Xmx512m\n\n",
-                                                          "Studio for kdb+",
-                                                          JOptionPane.ERROR_MESSAGE,
-                                                          getImage(Config.imageBase + "32x32/error.png"));
-                        }
-                        catch (Throwable ex) {
-                            String message = ex.getMessage();
+                    } catch (java.lang.OutOfMemoryError ex) {
+                        JOptionPane.showMessageDialog(frame,
+                                "\nOut of memory whilst communicating with " + server.getHost() + ":" + server.getPort() + "\n\nThe result set is probably too large.\n\nTry increasing the memory available to studio through the command line option -J -Xmx512m\n\n",
+                                "Studio for kdb+",
+                                JOptionPane.ERROR_MESSAGE,
+                                getImage(Config.imageBase + "32x32/error.png"));
+                    } catch (Throwable ex) {
+                        String message = ex.getMessage();
 
-                            if ((message == null) || (message.length() == 0))
-                                message = "No message with exception. Exception is " + ex.toString();
-
-                            JOptionPane.showMessageDialog(frame,
-                                                          "\nAn unexpected error occurred whilst communicating with " + server.getHost() + ":" + server.getPort() + "\n\nError detail is\n\n" + message + "\n\n",
-                                                          "Studio for kdb+",
-                                                          JOptionPane.ERROR_MESSAGE,
-                                                          getImage(Config.imageBase + "32x32/error.png"));
-                        }
-                    else
-                        try {
-                            Utilities.setStatusText(textArea, "Last execution time:"+(execTime>0?""+execTime:"<1")+" mS");
-                            processK4Results(r);
-                        }
-                        catch (Exception e) {
-                            JOptionPane.showMessageDialog(frame,
-                                                          "\nAn unexpected error occurred whilst communicating with " + server.getHost() + ":" + server.getPort() + "\n\nError detail is\n\n" + e.getMessage() + "\n\n",
-                                                          "Studio for kdb+",
-                                                          JOptionPane.ERROR_MESSAGE,
-                                                          getImage(Config.imageBase + "32x32/error.png"));
+                        if ((message == null) || (message.length() == 0)) {
+                            message = "No message with exception. Exception is " + ex.toString();
                         }
 
-                    cleanup();
+                        JOptionPane.showMessageDialog(frame,
+                                "\nAn unexpected error occurred whilst communicating with " + server.getHost() + ":" + server.getPort() + "\n\nError detail is\n\n" + message + "\n\n",
+                                "Studio for kdb+",
+                                JOptionPane.ERROR_MESSAGE,
+                                getImage(Config.imageBase + "32x32/error.png"));
+                    }
+                } else {
+                    try {
+                        Utilities.setStatusText(textArea, "Last execution time:" + (execTime > 0 ? "" + execTime : "<1") + " mS");
+                        processK4Results(r);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(frame,
+                                "\nAn unexpected error occurred whilst communicating with " + server.getHost() + ":" + server.getPort() + "\n\nError detail is\n\n" + e.getMessage() + "\n\n",
+                                "Studio for kdb+",
+                                JOptionPane.ERROR_MESSAGE,
+                                getImage(Config.imageBase + "32x32/error.png"));
+                    }
                 }
+
+                cleanup();
+
             }
 
             private void cleanup() {
