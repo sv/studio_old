@@ -955,7 +955,7 @@ public class K {
         public String getDataType() {
             return "Flip";
         }
-        ;
+
         public K.KSymbolVector x;
         public K.KBaseVector y;
 

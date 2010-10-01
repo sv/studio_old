@@ -30,6 +30,7 @@ import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.URI;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -1114,7 +1115,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
                 f.setModal(true);
                 f.pack();
                 Util.centerChildOnParent(f,frame);
-                f.show();
+                f.setVisible(true);
 
                 if (f.getResult() == DialogResult.ACCEPTED) {
                     Server s = f.getServer();
@@ -1856,8 +1857,10 @@ public class Studio extends JPanel implements Observer,WindowListener {
             toolbar.add(replaceAction);
 
             toolbar.addSeparator();
-            toolbar.add(subscribeAction);
-            toolbar.addSeparator();
+            if (Config.getInstance().isSubsciptionEnabled()) {
+                toolbar.add(subscribeAction);
+                toolbar.addSeparator();
+            }
             toolbar.add(codeKxComAction);
 
             for (int j = 0;j < toolbar.getComponentCount();j++) {

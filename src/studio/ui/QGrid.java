@@ -67,7 +67,7 @@ public class QGrid extends JPanel {
     public int getRowCount() {
         return model.getRowCount();
     }
-    //   public  QGrid(){super();}
+
     public float factor = 1;
     private JPopupMenu popupMenu = new JPopupMenu();
 

@@ -443,6 +443,24 @@ public class Config
         save();
     }
 
+        public boolean isSubsciptionEnabled() {
+        boolean sub = false;
+
+        if (p != null) {
+            sub = Boolean.valueOf(p.getProperty("subsciption", "false"));
+        }
+
+        return sub;
+    }
+
+    public void setSubscriptionEnabled(boolean sub) {
+        if (p != null) {
+            p.put("subsciption", String.valueOf(sub));
+        }
+
+        save();
+    }
+
     public boolean isDictAsTable() {
         boolean dt = false;
 

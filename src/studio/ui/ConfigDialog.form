@@ -53,7 +53,7 @@
                   </Group>
                   <Component id="jLabel2" alignment="0" pref="380" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                      <Component id="subsciption" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="dictAsTable" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -86,7 +86,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="subsciption" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="dictAsTable" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="10" max="32767" attributes="0"/>
@@ -136,9 +136,6 @@
           <Connection code="Config.getInstance().getLookAndFeel()" type="code"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lookAndFeelActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="nfLabel">
       <Properties>
@@ -172,7 +169,7 @@
         <Property name="text" type="java.lang.String" value="* Restart app to changes get effect"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+    <Component class="javax.swing.JCheckBox" name="subsciption">
       <Properties>
         <Property name="text" type="java.lang.String" value="Subscription support"/>
       </Properties>

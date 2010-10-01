@@ -57,7 +57,7 @@ public class ConfigDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         fontChooserButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        subsciption = new javax.swing.JCheckBox();
         dictAsTable = new javax.swing.JCheckBox();
 
         setTitle("Studio for kdb+ settings");
@@ -86,11 +86,6 @@ public class ConfigDialog extends javax.swing.JDialog {
         lfLabel.setText("Look and feel:");
 
         lookAndFeel.setText(Config.getInstance().getLookAndFeel());
-        lookAndFeel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lookAndFeelActionPerformed(evt);
-            }
-        });
 
         nfLabel.setText("Number format:");
 
@@ -107,7 +102,7 @@ public class ConfigDialog extends javax.swing.JDialog {
 
         jLabel2.setText("* Restart app to changes get effect");
 
-        jCheckBox1.setText("Subscription support");
+        subsciption.setText("Subscription support");
 
         dictAsTable.setText("Dict as table");
         dictAsTable.setSelected(Config.getInstance().isDictAsTable());
@@ -139,7 +134,7 @@ public class ConfigDialog extends javax.swing.JDialog {
                             .addComponent(numberFormat, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)))
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCheckBox1)
+                        .addComponent(subsciption)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(dictAsTable)))
                 .addContainerGap())
@@ -168,7 +163,7 @@ public class ConfigDialog extends javax.swing.JDialog {
                     .addComponent(fontChooserButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
+                    .addComponent(subsciption)
                     .addComponent(dictAsTable))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jLabel2)
@@ -194,6 +189,9 @@ public class ConfigDialog extends javax.swing.JDialog {
         }
         if(dictAsTable.isSelected() != Config.getInstance().isDictAsTable())
             Config.getInstance().setDictAsTable(dictAsTable.isSelected());
+
+        if(subsciption.isSelected() != Config.getInstance().isSubsciptionEnabled())
+            Config.getInstance().setSubscriptionEnabled(subsciption.isSelected());
         doClose(RET_OK);
     }//GEN-LAST:event_okButtonActionPerformed
 
@@ -205,10 +203,6 @@ public class ConfigDialog extends javax.swing.JDialog {
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         doClose(RET_CANCEL);
     }//GEN-LAST:event_closeDialog
-
-    private void lookAndFeelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lookAndFeelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lookAndFeelActionPerformed
 
     private Font newFont=null;
 
@@ -249,7 +243,6 @@ public class ConfigDialog extends javax.swing.JDialog {
     private javax.swing.JButton cancelButton;
     private javax.swing.JCheckBox dictAsTable;
     private javax.swing.JButton fontChooserButton;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
@@ -258,6 +251,7 @@ public class ConfigDialog extends javax.swing.JDialog {
     private javax.swing.JLabel nfLabel;
     private javax.swing.JTextField numberFormat;
     private javax.swing.JButton okButton;
+    private javax.swing.JCheckBox subsciption;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 
