@@ -26,6 +26,7 @@ import java.text.NumberFormat;
 import java.text.DecimalFormat;
 import java.awt.*;
 import java.lang.reflect.Type;
+import studio.utils.GsonPrettyPrinter;
 
 public class Config
 {
@@ -288,10 +289,10 @@ public class Config
     {
          GsonBuilder gsb=new GsonBuilder().setPrettyPrinting();
          gsb.registerTypeAdapter(Color.class, new ColorSerializer());
-        Gson gson = gsb.create();
+        GsonPrettyPrinter gson = new GsonPrettyPrinter(gsb.create());
             try {
                 FileWriter f=new FileWriter(absoluteFilename);
-                gson.toJson(iconfig, f);
+                gson.ppJson(iconfig, new PrintWriter(f),IConfig.class);
                 f.close();
             } catch (IOException ex) {
                 Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
