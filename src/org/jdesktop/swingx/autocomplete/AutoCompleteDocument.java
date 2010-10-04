@@ -1,5 +1,5 @@
 /*
- * $Id: AutoCompleteDocument.java 3365 2009-06-17 01:52:57Z kschaefe $
+ * $Id: AutoCompleteDocument.java 3738 2010-07-27 13:56:28Z bierhance $
  *
  * Copyright 2004 Sun Microsystems, Inc., 4150 Network Circle,
  * Santa Clara, California 95054, U.S.A. All rights reserved.
@@ -149,17 +149,19 @@ public class AutoCompleteDocument implements Document {
         }
     }
     
-    /** Flag to indicate if adaptor.setSelectedItem has been called.
-     * Subsequent calls to remove/insertString should be ignored
-     * as they are likely have been caused by the adapted Component that
-     * is trying to set the text for the selected component.*/
-    boolean selecting=false;
-    
     /**
      * true, if only items from the adaptors's list can be entered
      * false, otherwise (selected item might not be in the adaptors's list)
      */
     protected boolean strictMatching;
+    
+    protected final Document delegate;
+    
+    /** Flag to indicate if adaptor.setSelectedItem has been called.
+     * Subsequent calls to remove/insertString should be ignored
+     * as they are likely have been caused by the adapted Component that
+     * is trying to set the text for the selected component.*/
+    boolean selecting = false;
     
     /**
      * The adaptor that is used to find and select items.
@@ -169,8 +171,6 @@ public class AutoCompleteDocument implements Document {
     ObjectToStringConverter stringConverter;
     
     private final Handler handler;
-    
-    protected final Document delegate;
     
     /**
      * Creates a new AutoCompleteDocument for the given AbstractAutoCompleteAdaptor.
@@ -193,7 +193,11 @@ public class AutoCompleteDocument implements Document {
         
         // Handle initially selected object
         Object selected = adaptor.getSelectedItem();
-        if (selected!=null) setText(this.stringConverter.getPreferredStringForItem(selected));
+        if (selected != null) {
+            String itemAsString = this.stringConverter.getPreferredStringForItem(selected);
+            setText(itemAsString);
+            adaptor.setSelectedItemAsString(itemAsString);
+        }
         this.adaptor.markEntireText();
     }
     
@@ -255,29 +259,37 @@ public class AutoCompleteDocument implements Document {
             setSelectedItem(lookupResult.matchingItem, lookupResult.matchingString);
         } else {
             lookupResult = lookupItem(pattern);
-            if (lookupResult.matchingItem != null) {
-                setSelectedItem(lookupResult.matchingItem, lookupResult.matchingString);
-            } else {
-                if (strictMatching) {
-                    // keep old item selected if there is no match
-                    lookupResult.matchingItem = adaptor.getSelectedItem();
-                    lookupResult.matchingString = adaptor.getSelectedItemAsString();
-                    // imitate no insert (later on offs will be incremented by
-                    // str.length(): selection won't move forward)
-                    offs = offs-str.length();
+        }
+        
+        if (lookupResult.matchingItem != null) {
+            setSelectedItem(lookupResult.matchingItem, lookupResult.matchingString);
+        } else {
+            if (strictMatching) {
+                // keep old item selected if there is no match
+                lookupResult.matchingItem = adaptor.getSelectedItem();
+                lookupResult.matchingString = adaptor.getSelectedItemAsString();
+                // imitate no insert (later on offs will be incremented by
+                // str.length(): selection won't move forward)
+                offs = str == null ? offs : offs - str.length();
+                
+                if (str != null && !str.isEmpty()) {
                     // provide feedback to the user that his input has been received but can not be accepted
                     UIManager.getLookAndFeel().provideErrorFeedback(adaptor.getTextComponent());
-                } else {
-                    // no item matches => use the current input as selected item
-                    lookupResult.matchingItem=getText(0, getLength());
-                    lookupResult.matchingString=getText(0, getLength());
-                    setSelectedItem(lookupResult.matchingItem, lookupResult.matchingString);
                 }
+            } else {
+                // no item matches => use the current input as selected item
+                lookupResult.matchingItem=getText(0, getLength());
+                lookupResult.matchingString=getText(0, getLength());
+                setSelectedItem(lookupResult.matchingItem, lookupResult.matchingString);
             }
         }
+        
         setText(lookupResult.matchingString);
+        
         // select the completed part
-        adaptor.markText(offs+str.length());
+        int len = str == null ? 0 : str.length();
+        offs = lookupResult.matchingString == null ? 0 : offs + len;
+        adaptor.markText(offs);
     }
     
     /**

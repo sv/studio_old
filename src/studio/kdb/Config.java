@@ -18,10 +18,8 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import studio.core.DefaultAuthenticationMechanism;
 import java.io.*;
 import java.util.*;
-import java.util.List;
 import java.text.NumberFormat;
 import java.text.DecimalFormat;
 import java.awt.*;
@@ -164,30 +162,10 @@ public class Config
         }
     }
 
-
-    public static void main(String[] args){
-        Config c=Config.getInstance();
-        IConfig ic=new IConfig();
-        ic.setEncoding(c.getEncoding());
-        ic.setDefaultFont(c.getFont());
-        ic.setDecimalFormat(((DecimalFormat)c.getNumberFormat()).toLocalizedPattern());
-        ic.setQkeywords(new HashSet<String>(Arrays.asList(c.getQKeywords())));
-        ic.setSubscriptionEnabled(c.isSubsciptionEnabled());
-        ic.setDictAsTable(c.isDictAsTable());
-        ic.setMrufiles(new HashSet<String>(Arrays.asList(c.getMRUFiles())));
-        ic.setLicenseAccepted(c.getLicenseAcceptedDate());
-        Map<String,Server> map=new HashMap<String, Server>();
-        for(Server next:c.getServers()){
-            map.put(next.getName(),next);
-        }
-        ic.setServers(map);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        System.out.println(gson.toJson(ic));
-    }
     public static String imageBase="/de/skelton/images/";
     public static String imageBase2="/de/skelton/utils/";
     private static String path;
-    private static String filename="studio.txt";
+    private static String filename="studio.json";
     private static String absoluteFilename;
     private static String version="1.1";
     private static Config instance=new Config();

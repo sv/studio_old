@@ -1,5 +1,5 @@
 /*
- * $Id: AutoCompleteComboBoxEditor.java 3013 2008-07-31 18:12:19Z kschaefe $
+ * $Id: AutoCompleteComboBoxEditor.java 3697 2010-05-07 15:30:40Z kschaefe $
  *
  * Copyright 2004 Sun Microsystems, Inc., 4150 Network Circle,
  * Santa Clara, California 95054, U.S.A. All rights reserved.
@@ -45,9 +45,9 @@ import javax.swing.ComboBoxEditor;
 public class AutoCompleteComboBoxEditor implements ComboBoxEditor {
 
     /** the original combo box editor*/
-    private final ComboBoxEditor wrapped;
+    final ComboBoxEditor wrapped;
     /** the converter used to convert items into their string representation */
-    private final ObjectToStringConverter stringConverter;
+    final ObjectToStringConverter stringConverter;
     /** last selected item */
     private Object oldItem;
 
