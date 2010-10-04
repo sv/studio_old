@@ -35,6 +35,7 @@ import java.net.URI;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.netbeans.editor.example.QKit;
 import org.netbeans.editor.ext.q.QSettingsInitializer;
 import studio.utils.CloseableSwingWorker;
@@ -1764,7 +1765,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
                         return getPreferredSize();
                     }
                 };
-
+                AutoCompleteDecorator.decorate(combo);
                 int offset = Config.getInstance().getOffset(server);
 
                 if (offset == -1) {
