@@ -2166,7 +2166,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
             return;
         }
         exportAction.setEnabled(true);
-        if (r instanceof K.Dict && Config.getInstance().isDictAsTable()) {
+        if (r instanceof K.Dict && !FlipTableModel.isTable(r) && Config.getInstance().isDictAsTable()) {
             K.Dict src = (K.Dict) r;
             K.KSymbolVector kk = new K.KSymbolVector(1);
             K.KList kv = new K.KList(1);
