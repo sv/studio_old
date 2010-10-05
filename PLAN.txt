@@ -1,4 +1,4 @@
-- Enable subscription
 - online dict merges
 - Copy character arrays from result as strings
-- show realtime chart on data update
+- Respond with :: to request that comes to studio, this will prevent errors when q writes to broken/wrong socket
+- add 'T' char to datetime output. Check if this consistent with excel export
