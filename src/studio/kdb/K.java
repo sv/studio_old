@@ -853,7 +853,7 @@ public class K {
             else if (time == Double.NEGATIVE_INFINITY)
                 return "-0wz";
             else
-                return sd("yyyy.MM.dd HH:mm:ss.SSS",toTimestamp());
+                return sd("yyyy.MM.dd'T'HH:mm:ss.SSS",toTimestamp());
         }
 
         public void toString(LimitedWriter w,boolean showType) throws IOException {
@@ -890,7 +890,7 @@ public class K {
                 return "-0Wp";
             else{
                 Timestamp ts=toTimestamp();
-                return sd("yyyy.MM.dd HH:mm:ss.",ts)+nsFormatter.format(ts.getNanos());
+                return sd("yyyy.MM.dd'D'HH:mm:ss.",ts)+nsFormatter.format(ts.getNanos());
             }
         }
 
@@ -1638,17 +1638,7 @@ public class K {
                 for (int i = 0;i < getLength();i++) {
                     if (i > 0)
                         w.write(" ");
-                    double d = Array.getDouble(array,i);
-                    if (i > 0)
-                        w.write(" ");
-                    if (Double.isNaN(d))
-                        w.write("0Nz");
-                    else if (d == Double.POSITIVE_INFINITY)
-                        w.write("0wz");
-                    else if (d == Double.NEGATIVE_INFINITY)
-                        w.write("-0wz");
-                    else
-                        w.write(sd("yyyy.MM.dd HH:mm:ss.SSS",new Timestamp(((long) (.5 + 8.64e7 * (d + 10957))))));
+                    w.write(at(i).toString(false));
                 }
             }
         }
@@ -1797,15 +1787,7 @@ public class K {
                 for (int i = 0;i < getLength();i++) {
                     if (i > 0)
                         w.write(" ");
-                    int v = Array.getInt(array,i);
-                    if (v == Integer.MIN_VALUE)
-                        w.write("0Nt");
-                    else if (v == Integer.MAX_VALUE)
-                        w.write("0Wt");
-                    else if (v == -Integer.MAX_VALUE)
-                        w.write("-0Wt");
-                    else
-                        w.write(sd("HH:mm:ss.SSS",new Time(v)));
+                    w.write(at(i).toString(false));
                 }
             }
         }

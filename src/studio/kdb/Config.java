@@ -367,8 +367,8 @@ public class Config
         save();
     }
 
-        public boolean isSubsciptionEnabled() {
-        
+    public boolean isSubsciptionEnabled() {
+
         return iconfig.isSubscriptionEnabled();
     }
 
