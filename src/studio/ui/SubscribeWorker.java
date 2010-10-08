@@ -70,6 +70,7 @@ public class SubscribeWorker extends CloseableSwingWorker {
     public void usub(){
         try {
             c.k(new KCharacterVector(".u.del[`" + tableName + ";.z.w]"));
+            close();
         } catch (K4Exception ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
@@ -79,10 +80,10 @@ public class SubscribeWorker extends CloseableSwingWorker {
 
     @Override
     public void close() throws IOException {
-        this.cancel(true);
         if (c != null) {
             c.close();
             ConnectionPool.getInstance().freeConnection(new Server(), c);
         }
+        this.cancel(true);
     }
 }

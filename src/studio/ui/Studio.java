@@ -1291,59 +1291,58 @@ public class Studio extends JPanel implements Observer,WindowListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (server==null) return;
+                final kx.c c = ConnectionPool.getInstance().leaseConnection(server);
 
-                if (server != null) {
-                    final kx.c c = ConnectionPool.getInstance().leaseConnection(server);
+                try {
+                    ConnectionPool.getInstance().checkConnected(c);
+                    final JDialog dialog = new JDialog(frame, true);
+                    SwingWorker worker = new SwingWorker() {
 
-                    try {
-                        ConnectionPool.getInstance().checkConnected(c);
-                        final JDialog dialog = new JDialog(frame, true);
-                        SwingWorker worker = new SwingWorker() {
-
-                            @Override
-                            protected Object doInBackground() throws Exception {
-                                try {
-                                    c.k(new K.KCharacterVector(".u.t"));
-                                    return c.getResponse();
-                                } catch (Throwable ex) {
-                                    throw new Exception(ex);
-                                }
+                        @Override
+                        protected Object doInBackground() throws Exception {
+                            try {
+                                c.k(new K.KCharacterVector(".u.t"));
+                                return c.getResponse();
+                            } catch (Throwable ex) {
+                                throw new Exception(ex);
                             }
-
-                            @Override
-                            protected void done() {
-                                dialog.setVisible(false);
-                                dialog.dispose();
-                                try {
-                                    Object res = get();
-                                    if (res instanceof K.KSymbolVector) {
-                                        subscribeFeed(res, c);
-                                    }
-                                } catch (Throwable ex) {
-                                    JOptionPane.showMessageDialog(frame, "Nothing to subscribe for!");
-                                }
-
-                            }
-                        };
-                        JProgressBar pb = new JProgressBar();
-                        pb.setIndeterminate(true);
-                        dialog.add(pb);
-                        worker.execute();
-                        dialog.pack();
-                        dialog.setLocationRelativeTo(null);
-                        //the dialog will be visible until the SwingWorker is done
-                        dialog.setVisible(true);
-                    } catch (Throwable th) {
-
-                        if (c != null) {
-                            ConnectionPool.getInstance().freeConnection(server, c);
                         }
-                        JOptionPane.showMessageDialog(frame,
-                                "An Exception occurred\n\nDetails - \n\n" + th.toString(),
-                                "Studio for kdb+",
-                                JOptionPane.ERROR_MESSAGE);
+
+                        @Override
+                        protected void done() {
+                            dialog.setVisible(false);
+                            dialog.dispose();
+                            try {
+                                Object res = get();
+                                if (res instanceof K.KSymbolVector) {
+                                    subscribeFeed(res, c);
+                                }
+                            } catch (Throwable ex) {
+                                JOptionPane.showMessageDialog(frame, "Nothing to subscribe for!");
+                            }
+
+                        }
+                    };
+                    JProgressBar pb = new JProgressBar();
+                    pb.setIndeterminate(true);
+                    dialog.add(pb);
+                    worker.execute();
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(null);
+                    //the dialog will be visible until the SwingWorker is done
+                    dialog.setVisible(true);
+                } catch (Throwable th) {
+
+                    if (c != null) {
+                        ConnectionPool.getInstance().freeConnection(server, c);
                     }
+                    JOptionPane.showMessageDialog(frame,
+                            "An Exception occurred\n\nDetails - \n\n" + th.toString(),
+                            "Studio for kdb+",
+                            JOptionPane.ERROR_MESSAGE);
                 }
+
             }
 
             private void subscribeFeed(Object res, final c c) throws Throwable {
@@ -1395,12 +1394,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
 
                                 @Override
                                 public void windowClosing(WindowEvent e) {
-                                    try {
-                                        worker.usub();
-                                        worker.cancel(true);                                        
-                                    } catch (Throwable ex) {
-                                        ex.printStackTrace();
-                                    }
+                                    worker.usub();
                                 }
                             };
                             frame.addWindowListener(closeAdapter);
