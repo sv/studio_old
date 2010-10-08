@@ -103,6 +103,7 @@ public class ConfigDialog extends javax.swing.JDialog {
         jLabel2.setText("* Restart app to changes get effect");
 
         subsciption.setText("Subscription support");
+        subsciption.setSelected(Config.getInstance().isSubsciptionEnabled());
 
         dictAsTable.setText("Dict as table");
         dictAsTable.setSelected(Config.getInstance().isDictAsTable());

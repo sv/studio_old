@@ -173,6 +173,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Subscription support"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="subsciption.setSelected(Config.getInstance().isSubsciptionEnabled());"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JCheckBox" name="dictAsTable">
       <Properties>
