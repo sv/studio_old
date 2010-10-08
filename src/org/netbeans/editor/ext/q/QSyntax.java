@@ -13,11 +13,10 @@ import org.netbeans.editor.TokenID;
 
 public class QSyntax extends Syntax
 {
-    private static Map map;
+    private static Map map=new ConcurrentHashMap<String,Object>();;
 
     private void initMap()
     {
-        map=new ConcurrentHashMap<String,Object>();
         Object o=new Object();
 
         String[] keywords=new String[]
