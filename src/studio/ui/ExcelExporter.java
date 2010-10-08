@@ -129,6 +129,10 @@ class ExcelExporter {
                                     char[] cs = sd("yyyy-MM-dd HH:mm:ss.SSS", ((K.KTimestamp) b).toTimestamp()).toCharArray();
                                     cs[10] = 'T';
                                     writer.write("<ss:Cell ss:StyleID=\"datetime\"><ss:Data ss:Type=\"DateTime\">" + new String(cs));
+                                } else if (table.getColumnClass(j) == K.KDatetimeVector.class) {
+                                    char[] cs = sd("yyyy-MM-dd HH:mm:ss.SSS", ((K.KDatetime) b).toTimestamp()).toCharArray();
+                                    cs[10] = 'T';
+                                    writer.write("<ss:Cell ss:StyleID=\"datetime\"><ss:Data ss:Type=\"DateTime\">" + new String(cs));
                                 } else if (table.getColumnClass(j) == K.KMonthVector.class) {
                                     writer.write("<ss:Cell ss:StyleID=\"month\"><ss:Data ss:Type=\"DateTime\">" + sd("yyyy-MM", ((K.Month) b).toDate()));
                                 } else if (table.getColumnClass(j) == K.KMinuteVector.class) {
