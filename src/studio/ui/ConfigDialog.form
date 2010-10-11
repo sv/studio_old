@@ -38,7 +38,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lfLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="lookAndFeel" pref="294" max="32767" attributes="0"/>
+                      <Component id="lookAndFeel" pref="288" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -48,7 +48,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="fontChooserButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="numberFormat" alignment="0" pref="294" max="32767" attributes="0"/>
+                          <Component id="numberFormat" alignment="0" pref="288" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jLabel2" alignment="0" pref="380" max="32767" attributes="0"/>
@@ -127,7 +127,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lfLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Look and feel:"/>
+        <Property name="text" type="java.lang.String" value="Look and feel:*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="lookAndFeel">
@@ -139,7 +139,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="nfLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Number format:"/>
+        <Property name="text" type="java.lang.String" value="Number format:*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="numberFormat">
@@ -174,7 +174,7 @@
         <Property name="text" type="java.lang.String" value="Subscription support"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="subsciption.setSelected(Config.getInstance().isSubsciptionEnabled());"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="subsciption.setSelected(Config.getInstance().isSubscriptionEnabled());"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JCheckBox" name="dictAsTable">

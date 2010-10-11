@@ -83,11 +83,11 @@ public class ConfigDialog extends javax.swing.JDialog {
 
         titleLabel.setText("Studio for kdb+ settings");
 
-        lfLabel.setText("Look and feel:");
+        lfLabel.setText("Look and feel:*");
 
         lookAndFeel.setText(Config.getInstance().getLookAndFeel());
 
-        nfLabel.setText("Number format:");
+        nfLabel.setText("Number format:*");
 
         numberFormat.setText(((DecimalFormat)Config.getInstance().getNumberFormat()).toPattern());
 
@@ -103,7 +103,7 @@ public class ConfigDialog extends javax.swing.JDialog {
         jLabel2.setText("* Restart app to changes get effect");
 
         subsciption.setText("Subscription support");
-        subsciption.setSelected(Config.getInstance().isSubsciptionEnabled());
+        subsciption.setSelected(Config.getInstance().isSubscriptionEnabled());
 
         dictAsTable.setText("Dict as table");
         dictAsTable.setSelected(Config.getInstance().isDictAsTable());
@@ -124,7 +124,7 @@ public class ConfigDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lfLabel)
                         .addGap(18, 18, 18)
-                        .addComponent(lookAndFeel, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE))
+                        .addComponent(lookAndFeel, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nfLabel)
@@ -132,7 +132,7 @@ public class ConfigDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(fontChooserButton)
-                            .addComponent(numberFormat, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)))
+                            .addComponent(numberFormat, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)))
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(subsciption)
@@ -191,7 +191,7 @@ public class ConfigDialog extends javax.swing.JDialog {
         if(dictAsTable.isSelected() != Config.getInstance().isDictAsTable())
             Config.getInstance().setDictAsTable(dictAsTable.isSelected());
 
-        if(subsciption.isSelected() != Config.getInstance().isSubsciptionEnabled())
+        if(subsciption.isSelected() != Config.getInstance().isSubscriptionEnabled())
             Config.getInstance().setSubscriptionEnabled(subsciption.isSelected());
         doClose(RET_OK);
     }//GEN-LAST:event_okButtonActionPerformed

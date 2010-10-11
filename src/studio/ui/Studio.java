@@ -96,6 +96,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
     private UserAction editServerAction;
     private UserAction addServerAction;
     private UserAction removeServerAction;
+    private UserAction cloneServerAction;
     private static int scriptNumber = 0;
     private static int myScriptNumber;
     private JFrame frame;
@@ -1105,6 +1106,34 @@ public class Studio extends JPanel implements Observer,WindowListener {
             }
         };
 
+        cloneServerAction = new UserAction(I18n.getString("Clone"),
+                                          getImage(Config.imageBase2 + "data_copy.png"),
+                                          "Clone current server",
+                                          new Integer(KeyEvent.VK_D),
+                                          null) {
+             public void actionPerformed(ActionEvent e) {
+                    Server clone = new Server(server);
+                    clone.setName("Clone of " + clone.getName());
+
+                    EditServerForm f = new EditServerForm(frame, clone);
+                    f.setModal(true);
+                    f.pack();
+                    Util.centerChildOnParent(f, frame);
+                    //   f.setStartLocation(frame);
+
+                    f.setVisible(true);
+
+                    if (f.getResult() == DialogResult.ACCEPTED) {
+                        clone = f.getServer();
+                        Config.getInstance().addServer(clone);
+                        //rebuildToolbar();
+                        setServer(clone);
+                        ConnectionPool.getInstance().purge(clone); //?
+                        windowListMonitor.fireMyEvent(new WindowListChangedEvent(this));
+                    }
+             }
+        };
+
 
         addServerAction = new UserAction(I18n.getString("Add"),
                                          getImage(Config.imageBase2 + "server_add.png"),
@@ -1232,6 +1261,8 @@ public class Studio extends JPanel implements Observer,WindowListener {
             public void actionPerformed(ActionEvent e) {
                 ConfigDialog d = new ConfigDialog(frame, enabled);
                 d.setVisible(true);
+                rebuildToolbar();
+                windowListMonitor.fireMyEvent(new WindowListChangedEvent(this));
             }
         };
 
@@ -1614,46 +1645,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
         menu.add(new JMenuItem(addServerAction));
         menu.add(new JMenuItem(editServerAction));
         menu.add(new JMenuItem(removeServerAction));
-
-        Server[] servers = Config.getInstance().getServers();
-        if (servers.length > 0) {
-            JMenu subMenu = new JMenu(I18n.getString("Clone"));
-            subMenu.setIcon(Util.getImage(Config.imageBase2 + "data_copy.png"));
-           
-            for (int i = 0;i < servers.length;i++) {
-                final Server s = servers[i];
-
-                JMenuItem item = new JMenuItem(s.getName());
-                item.addActionListener(new ActionListener() {
-                                        
-                                       public void actionPerformed(ActionEvent e) {
-                                           Server clone = new Server(s);
-                                           clone.setName("Clone of " + clone.getName());
-
-                                           EditServerForm f = new EditServerForm(frame,clone);
-                                           f.setModal(true);
-                                           f.pack();
-                                           Util.centerChildOnParent(f,frame);
-                                           //   f.setStartLocation(frame);
-
-                                           f.setVisible(true);
-
-                                           if (f.getResult() == DialogResult.ACCEPTED) {
-                                               clone = f.getServer();
-                                               Config.getInstance().addServer(clone);
-                                               //rebuildToolbar();
-                                               setServer(clone);
-                                               ConnectionPool.getInstance().purge(clone); //?
-                                               windowListMonitor.fireMyEvent(new WindowListChangedEvent(this));
-                                           }
-                                       }
-                                   });
-
-                subMenu.add(item);
-            }
-
-            menu.add(subMenu);
-        }
+        menu.add(new JMenuItem(cloneServerAction));
 
         menubar.add(menu);
 
@@ -1808,6 +1800,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
                 addServerAction.setEnabled(true);
                 editServerAction.setEnabled(false);
                 removeServerAction.setEnabled(false);
+                cloneServerAction.setEnabled(false);
                 stopAction.setEnabled(false);
                 executeAction.setEnabled(false);
                 executeCurrentLineAction.setEnabled(false);
@@ -1818,6 +1811,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
                 executeCurrentLineAction.setEnabled(true);
                 editServerAction.setEnabled(true);
                 removeServerAction.setEnabled(true);
+                cloneServerAction.setEnabled(true);
             }
 
             toolbar.add(stopAction);
@@ -1852,7 +1846,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
             toolbar.add(replaceAction);
 
             toolbar.addSeparator();
-            if (Config.getInstance().isSubsciptionEnabled()) {
+            if (Config.getInstance().isSubscriptionEnabled()) {
                 toolbar.add(subscribeAction);
                 toolbar.addSeparator();
             }
