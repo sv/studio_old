@@ -6,8 +6,6 @@
 
 package studio.ui;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import studio.kdb.*;
 import studio.utils.OSXAdapter;
 import javax.swing.event.UndoableEditEvent;
@@ -34,6 +32,8 @@ import java.lang.reflect.Array;
 import java.net.URI;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.netbeans.editor.example.QKit;
@@ -102,7 +102,8 @@ public class Studio extends JPanel implements Observer,WindowListener {
     private JFrame frame;
     public static java.util.List windowList = Collections.synchronizedList(new LinkedList());
     private int menuShortcutKeyMask = java.awt.Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
-
+    private final ExecutorService executor = Executors.newCachedThreadPool();
+    
     public void refreshFrameTitle() {
         String s = (String) textArea.getDocument().getProperty("filename");
         if (s == null)
@@ -1446,12 +1447,12 @@ public class Studio extends JPanel implements Observer,WindowListener {
                 JProgressBar pb = new JProgressBar();
                 pb.setIndeterminate(true);
                 dialog.add(pb);
-                worker.execute();
                 dialog.pack();
                 dialog.setLocationRelativeTo(null);
+                executor.execute(worker);
                 //the dialog will be visible until the SwingWorker is done
                 dialog.setVisible(true);
-
+//                worker.execute();                
             }
         };
 
@@ -2344,12 +2345,12 @@ public class Studio extends JPanel implements Observer,WindowListener {
                 refreshAction.setEnabled(true);
 
                 System.gc();
-
+                worker.cancel(true);
                 worker = null;
             }
         };
-
-        worker.execute();
+//        worker.execute();
+        executor.execute(worker);
     }
     private CloseableSwingWorker worker;
     

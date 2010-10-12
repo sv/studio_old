@@ -36,8 +36,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import studio.kdb.Config;
 
 public class c {
-    DataInputStream inputStream;
-    OutputStream outputStream;
+    private DataInputStream inputStream;
+    private OutputStream outputStream;
     byte[] b, B;
     int j;
     private JFrame frame;
@@ -572,65 +572,63 @@ public class c {
     }
 
 
-    public Object k() throws K4Exception,IOException {
-        synchronized(inputStream){
-            inputStream.readFully(b = new byte[8]);
+    public synchronized Object k() throws K4Exception,IOException {
+        inputStream.readFully(b = new byte[8]);
 
-            a = b[0] == 1;
-            boolean c = b[2] == 1;
-            j = 4;
+        a = b[0] == 1;
+        boolean c = b[2] == 1;
+        j = 4;
 
-            final int msgLength = ri() - 8;
+        final int msgLength = ri() - 8;
 
-            final String message = "Receiving data ...";
-            final String note = "0 of " + (msgLength / 1024) + " kB";
-            String title = "Studio for kdb+";
-            UIManager.put("ProgressMonitor.progressText",title);
+        final String message = "Receiving data ...";
+        final String note = "0 of " + (msgLength / 1024) + " kB";
+        String title = "Studio for kdb+";
+        UIManager.put("ProgressMonitor.progressText",title);
 
-            final int min = 0;
-            final int max = msgLength;
-            ProgressMonitor pm = new ProgressMonitor(frame,message,note,min,max);
+        final int min = 0;
+        final int max = msgLength;
+        ProgressMonitor pm = new ProgressMonitor(frame,message,note,min,max);
 
-            try {
-                pm.setMillisToDecideToPopup(300);
-                pm.setMillisToPopup(100);
-                pm.setProgress(0);
+        try {
+            pm.setMillisToDecideToPopup(300);
+            pm.setMillisToPopup(100);
+            pm.setProgress(0);
 
-                b = new byte[msgLength];
-                int total = 0;
-                int packetSize = 1 + msgLength / 100;
-                if (packetSize < rxBufferSize)
-                    packetSize = rxBufferSize;
+            b = new byte[msgLength];
+            int total = 0;
+            int packetSize = 1 + msgLength / 100;
+            if (packetSize < rxBufferSize)
+                packetSize = rxBufferSize;
 
-                while (total < msgLength) {
-                    if (pm.isCanceled())
-                        throw new IOException("Cancelled by user");
+            while (total < msgLength) {
+                if (pm.isCanceled())
+                    throw new IOException("Cancelled by user");
 
-                    int remainder = msgLength - total;
-                    if (remainder < packetSize)
-                        packetSize = remainder;
+                int remainder = msgLength - total;
+                if (remainder < packetSize)
+                    packetSize = remainder;
 
-                    total += inputStream.read(b,total,packetSize);
-                    pm.setProgress(total);
-                    pm.setNote((total / 1024) + " of " + (msgLength / 1024) + " kB");
-                }
+                total += inputStream.read(b,total,packetSize);
+                pm.setProgress(total);
+                pm.setNote((total / 1024) + " of " + (msgLength / 1024) + " kB");
             }
-            finally {
-                pm.close();
-            }
-
-            if (c) {
-                u();
-            } else {
-                j = 0;
-            }
-
-            if (b[0] == -128) {
-                j = 1;
-                throw new K4Exception(rs().toString(true));
-            }
-            return r();
         }
+        finally {
+            pm.close();
+        }
+
+        if (c) {
+            u();
+        } else {
+            j = 0;
+        }
+
+        if (b[0] == -128) {
+            j = 1;
+            throw new K4Exception(rs().toString(true));
+        }
+        return r();
     }
 
     private void u() {

@@ -15,25 +15,26 @@ import java.io.IOException;
 import kx.c.K4Exception;
 
 public class ConnectionPool {
-    private static ConnectionPool instance;
-    private Map freeMap = new HashMap();
-    private Map busyMap = new HashMap();
+
+    static class ConnectionPoolHolder{
+        static ConnectionPool instance=new ConnectionPool();
+    }
+
+    private Map<String,List<kx.c>> freeMap = new HashMap<String,List<kx.c>>();
+    private Map<String,List<kx.c>> busyMap = new HashMap<String,List<kx.c>>();
 
     private ConnectionPool() {
     }
 
     public synchronized void purge(Server s) {
-        List list = (List) freeMap.get(s.toString());
+        List<kx.c> list = freeMap.get(s.getName());
 
         if (list != null) {
-            Iterator i = list.iterator();
-            while (i.hasNext()) {
-                kx.c c = (kx.c) i.next();
+            for(kx.c c:list)
                 c.close();
-            }
         }
 
-        busyMap.put(s.toString(),new LinkedList());
+        busyMap.put(s.getName(),new LinkedList<kx.c>());
 
         if (list != null)
             list.clear();
@@ -41,19 +42,16 @@ public class ConnectionPool {
     //    primeConnectionPool();
     }
 
-    public static synchronized ConnectionPool getInstance() {
-        if (instance == null)
-            instance = new ConnectionPool();
-
-        return instance;
+    public static ConnectionPool getInstance() {
+        return ConnectionPoolHolder.instance;
     }
 
     public synchronized kx.c leaseConnection(Server s) // throws IOException, c.K4Exception
     {
         kx.c c = null;
 
-        List list = (List) freeMap.get(s.toString());
-        List dead = new LinkedList();
+        List<kx.c> list = freeMap.get(s.getName());
+        List<kx.c> dead = new LinkedList<kx.c>();
 
         if (list != null) {
             Iterator i = list.iterator();
@@ -70,8 +68,8 @@ public class ConnectionPool {
             }
         }
         else {
-            list = new LinkedList();
-            freeMap.put(s.toString(),list);
+            list = new LinkedList<kx.c>();
+            freeMap.put(s.getName(),list);
         }
 
         list.removeAll(dead);
@@ -110,10 +108,10 @@ public class ConnectionPool {
         else
             list.remove(c);
 
-        list = (List) busyMap.get(s.toString());
+        list = busyMap.get(s.getName());
         if (list == null) {
-            list = new LinkedList();
-            busyMap.put(s.toString(),list);
+            list = new LinkedList<kx.c>();
+            busyMap.put(s.getName(),list);
         }
 
         list.add(c);
@@ -125,7 +123,7 @@ public class ConnectionPool {
         if (c == null)
             return;
 
-        List list = (List) busyMap.get(s.toString());
+        List<kx.c> list = busyMap.get(s.getName());
 
         // If c not in our busy list it has been purged, so close it
         if (list != null)
@@ -133,7 +131,7 @@ public class ConnectionPool {
                 c.close();
 
         if (!c.isClosed()) {
-            list = (List) freeMap.get(s.toString());
+            list = freeMap.get(s.getName());
             if (list == null)
                 c.close();
             else
