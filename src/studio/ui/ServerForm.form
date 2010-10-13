@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="modal" type="boolean" value="true"/>
+  </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="2"/>
   </SyntheticProperties>
@@ -202,9 +205,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Sample text on background"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SampleTextOnBackgroundTextFieldActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="authenticationMechanism">
     </Component>

@@ -19,7 +19,6 @@ import javax.swing.JOptionPane;
 public class ServerForm extends EscapeDialog {
     private int result= DialogResult.CANCELLED;
     private Server s;
-    private JFrame frame;
 
     public ServerForm(JFrame frame)
     {
@@ -28,7 +27,6 @@ public class ServerForm extends EscapeDialog {
     
     public ServerForm(JFrame frame,Server server){
         super(frame);
-        this.frame=frame;
         s=new Server(server);
         
         initComponents();
@@ -125,6 +123,8 @@ public class ServerForm extends EscapeDialog {
         authenticationMechanism = new javax.swing.JComboBox();
         passwordLabel1 = new javax.swing.JLabel();
 
+        setModal(true);
+
         logicalNameLabel.setText("Name");
 
         hostnameLabel.setText("Host");
@@ -159,11 +159,6 @@ public class ServerForm extends EscapeDialog {
         });
 
         SampleTextOnBackgroundTextField.setText("Sample text on background");
-        SampleTextOnBackgroundTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SampleTextOnBackgroundTextFieldActionPerformed(evt);
-            }
-        });
 
         passwordLabel1.setText("Auth. Method");
 
@@ -333,10 +328,6 @@ private void onColor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onColor
         SampleTextOnBackgroundTextField.setBackground(c);
         s.setBackgroundColor(c);
 }//GEN-LAST:event_onColor
-
-private void SampleTextOnBackgroundTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SampleTextOnBackgroundTextFieldActionPerformed
-// TODO add your handling code here:
-}//GEN-LAST:event_SampleTextOnBackgroundTextFieldActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
