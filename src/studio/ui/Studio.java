@@ -1729,137 +1729,135 @@ public class Studio extends JPanel implements Observer,WindowListener {
         int state = f.getExtendedState();
         state = state & ~Frame.ICONIFIED;
         f.setExtendedState(state);
-        f.show();
+        f.setVisible(true);
     }
 
     private void rebuildToolbar() {
-        if (toolbar != null) {
-            toolbar.removeAll();
+        if (toolbar == null) {
+            return;
+        }
+        toolbar.removeAll();
 
-            String[] names = Config.getInstance().getServerNames();
+        String[] names = Config.getInstance().getServerNames();
 
-            if ((names != null) && (names.length > 0)) {
-                toolbar.add(new JLabel(I18n.getString("Server")));
+        if ((names != null) && (names.length > 0)) {
+            toolbar.add(new JLabel(I18n.getString("Server")));
 
-                JComboBox combo = new JComboBox(names) {
-                    
-                    public Dimension getMinimumSize() {
-                        return getPreferredSize();
-                    }
+            JComboBox combo = new JComboBox(names) {
 
-                    
-                    public Dimension getMaximumSize() {
-                        return getPreferredSize();
-                    }
-                };
-                AutoCompleteDecorator.decorate(combo);
-                int offset = Config.getInstance().getOffset(server);
-
-                if (offset == -1) {
-                    Server[] servers = Config.getInstance().getServers();
-
-                    if (servers.length > 0)
-                        setServer(servers[0]);
-
-                    offset = 0;
+                public Dimension getMinimumSize() {
+                    return getPreferredSize();
                 }
 
-                combo.setSelectedIndex(offset);
-                combo.setToolTipText("Select the server context");
+                public Dimension getMaximumSize() {
+                    return getPreferredSize();
+                }
+            };
+            AutoCompleteDecorator.decorate(combo);
+            int offset = Config.getInstance().getOffset(server);
 
-                final Observer o = this;
+            if (offset == -1) {
+                Server[] servers = Config.getInstance().getServers();
 
-                ActionListener al = new ActionListener() {
-                    
-                    public void actionPerformed(ActionEvent e) {
-                        String selection = (String) ((JComboBox) e.getSource()).getSelectedItem();
+                if (servers.length > 0) {
+                    setServer(servers[0]);
+                }
 
-                        setServer(Config.getInstance().getServer(selection));
-
-                        //  setLanguage(Language.Q);
-
-                        SwingUtilities.invokeLater(new Runnable() {
-                            
-                                                   public void run() {
-                                                       rebuildToolbar();
-                                                       toolbar.validate();
-                                                       toolbar.repaint();
-                                                   }
-                                               });
-                    }
-                };
-
-                combo.addActionListener(al);
-
-                combo.setRequestFocusEnabled(false);
-
-                toolbar.add(combo);
-                toolbar.addSeparator();
+                offset = 0;
             }
 
-            if (server == null) {
-                addServerAction.setEnabled(true);
-                editServerAction.setEnabled(false);
-                removeServerAction.setEnabled(false);
-                cloneServerAction.setEnabled(false);
-                stopAction.setEnabled(false);
-                executeAction.setEnabled(false);
-                executeCurrentLineAction.setEnabled(false);
-                refreshAction.setEnabled(false);
-            }
-            else {
-                executeAction.setEnabled(true);
-                executeCurrentLineAction.setEnabled(true);
-                editServerAction.setEnabled(true);
-                removeServerAction.setEnabled(true);
-                cloneServerAction.setEnabled(true);
-            }
+            combo.setSelectedIndex(offset);
+            combo.setToolTipText("Select the server context");
 
-            toolbar.add(stopAction);
-            toolbar.add(executeAction);
-            toolbar.add(refreshAction);
+            ActionListener al = new ActionListener() {
+
+                public void actionPerformed(ActionEvent e) {
+                    String selection = (String) ((JComboBox) e.getSource()).getSelectedItem();
+
+                    setServer(Config.getInstance().getServer(selection));
+
+                    SwingUtilities.invokeLater(new Runnable() {
+
+                        public void run() {
+                            rebuildToolbar();
+                            toolbar.validate();
+                            toolbar.repaint();
+                        }
+                    });
+                }
+            };
+
+            combo.addActionListener(al);
+
+            combo.setRequestFocusEnabled(false);
+
+            toolbar.add(combo);
             toolbar.addSeparator();
+        }
 
-            toolbar.add(openFileAction);
-            toolbar.add(saveFileAction);
-            toolbar.add(saveAsFileAction);
-            toolbar.addSeparator();
+        if (server == null) {
+            addServerAction.setEnabled(true);
+            editServerAction.setEnabled(false);
+            removeServerAction.setEnabled(false);
+            cloneServerAction.setEnabled(false);
+            stopAction.setEnabled(false);
+            executeAction.setEnabled(false);
+            executeCurrentLineAction.setEnabled(false);
+            refreshAction.setEnabled(false);
+        } else {
+            executeAction.setEnabled(true);
+            executeCurrentLineAction.setEnabled(true);
+            editServerAction.setEnabled(true);
+            removeServerAction.setEnabled(true);
+            cloneServerAction.setEnabled(true);
+        }
+
+        toolbar.add(stopAction);
+        toolbar.add(executeAction);
+        toolbar.add(refreshAction);
+        toolbar.addSeparator();
+
+        toolbar.add(openFileAction);
+        toolbar.add(saveFileAction);
+        toolbar.add(saveAsFileAction);
+        toolbar.addSeparator();
 //            toolbar.add(importAction);
-            toolbar.add(openInExcel);
+        toolbar.add(openInExcel);
+        toolbar.addSeparator();
+        toolbar.add(exportAction);
+        toolbar.addSeparator();
+
+        toolbar.add(chartAction);
+        toolbar.addSeparator();
+
+        toolbar.add(undoAction);
+        toolbar.add(redoAction);
+        toolbar.addSeparator();
+
+        toolbar.add(cutAction);
+        toolbar.add(copyAction);
+        toolbar.add(pasteAction);
+
+        toolbar.addSeparator();
+        toolbar.add(findAction);
+
+        toolbar.add(replaceAction);
+
+        toolbar.addSeparator();
+        if (Config.getInstance().isSubscriptionEnabled()) {
+            toolbar.add(subscribeAction);
             toolbar.addSeparator();
-            toolbar.add(exportAction);
-            toolbar.addSeparator();
+        }
+        toolbar.add(codeKxComAction);
 
-            toolbar.add(chartAction);
-            toolbar.addSeparator();
+        for (int j = 0; j < toolbar.getComponentCount(); j++) {
+            Component c = toolbar.getComponentAtIndex(j);
 
-            toolbar.add(undoAction);
-            toolbar.add(redoAction);
-            toolbar.addSeparator();
-
-            toolbar.add(cutAction);
-            toolbar.add(copyAction);
-            toolbar.add(pasteAction);
-
-            toolbar.addSeparator();
-            toolbar.add(findAction);
-
-            toolbar.add(replaceAction);
-
-            toolbar.addSeparator();
-            if (Config.getInstance().isSubscriptionEnabled()) {
-                toolbar.add(subscribeAction);
-                toolbar.addSeparator();
-            }
-            toolbar.add(codeKxComAction);
-
-            for (int j = 0;j < toolbar.getComponentCount();j++) {
-                Component c = toolbar.getComponentAtIndex(j);
-
-                if (c instanceof JButton)
-                    ((JButton) c).setRequestFocusEnabled(false);
+            if (c instanceof JButton) {
+                ((JButton) c).setRequestFocusEnabled(false);
             }
         }
+
     }
 
     private JToolBar createToolbar() {
