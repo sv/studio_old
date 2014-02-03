@@ -191,6 +191,7 @@ public class QSyntax extends Syntax
         new Entry(1,delimiters,INIT,QTokenContext.INTEGER,ACTION_MATCHANDPUTBACK),
         new Entry(1,"D".toCharArray(),95,QTokenContext.TIMESPAN,ACTION_LOOKSLIKE),
         new Entry(1,"j".toCharArray(),2,QTokenContext.LONG,ACTION_LOOKSLIKE),
+        new Entry(1,"g".toCharArray(),2,QTokenContext.LONG,ACTION_LOOKSLIKE),
         new Entry(1,"h".toCharArray(),3,QTokenContext.SHORT,ACTION_LOOKSLIKE),
         new Entry(1,"e".toCharArray(),28,QTokenContext.REAL,ACTION_LOOKSLIKE),
         new Entry(1,"f".toCharArray(),16,QTokenContext.FLOAT,ACTION_LOOKSLIKE),
@@ -199,6 +200,7 @@ public class QSyntax extends Syntax
         new Entry(1,"v".toCharArray(),19,QTokenContext.MINUTE,ACTION_LOOKSLIKE),
         new Entry(1,"u".toCharArray(),20,QTokenContext.SECOND,ACTION_LOOKSLIKE),
         new Entry(1,"d".toCharArray(),21,QTokenContext.DATE,ACTION_LOOKSLIKE),
+        new Entry(1,"n".toCharArray(),105,QTokenContext.TIMESPAN,ACTION_LOOKSLIKE),
         new Entry(1,"p".toCharArray(),84,QTokenContext.TIMESTAMP,ACTION_LOOKSLIKE),
         new Entry(1,"z".toCharArray(),22,QTokenContext.DATETIME,ACTION_LOOKSLIKE),
         new Entry(1,"m".toCharArray(),23,QTokenContext.MONTH,ACTION_LOOKSLIKE),
@@ -461,6 +463,8 @@ public class QSyntax extends Syntax
         new Entry(83,digits,83,QTokenContext.TIMESPAN,ACTION_LOOKSLIKE),
         new Entry(83,delimiters,INIT,QTokenContext.TIMESPAN,ACTION_MATCHANDPUTBACK),
 
+        new Entry(84,delimiters,INIT,QTokenContext.TIMESTAMP,ACTION_MATCHANDPUTBACK),
+        
         new Entry(85,digits,86,QTokenContext.UNKNOWN,ACTION_LOOKSLIKE),
         new Entry(85,delimiters,INIT,QTokenContext.TIMESPAN,ACTION_MATCHANDPUTBACK),
         new Entry(86,digits,87,QTokenContext.UNKNOWN,ACTION_LOOKSLIKE),
@@ -494,6 +498,8 @@ public class QSyntax extends Syntax
         new Entry(103,delimiters,INIT,QTokenContext.TIMESTAMP,ACTION_MATCHANDPUTBACK),
         new Entry(104,digits,104,QTokenContext.TIMESTAMP,ACTION_LOOKSLIKE),
         new Entry(104,delimiters,INIT,QTokenContext.TIMESTAMP,ACTION_MATCHANDPUTBACK),                
+
+        new Entry(105,delimiters,INIT,QTokenContext.TIMESPAN,ACTION_MATCHANDPUTBACK),
 
         new Entry(255,delimiters,INIT,QTokenContext.UNKNOWN,ACTION_MATCHANDPUTBACK),
         new Entry(255,"".toCharArray(),255,QTokenContext.UNKNOWN,ACTION_LOOKSLIKE)

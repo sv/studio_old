@@ -33,6 +33,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.UUID;
 import studio.kdb.Config;
 
 public class c {
@@ -150,7 +151,7 @@ public class c {
         io(new Socket(host,port));
         java.io.ByteArrayOutputStream baos = new ByteArrayOutputStream();
         java.io.DataOutputStream dos = new DataOutputStream(baos);
-        dos.write((up+(retry?"\1":"")).getBytes());
+        dos.write((up+(retry?"\3":"")).getBytes());
         dos.writeByte(0);
         dos.flush();
         outputStream.write(baos.toByteArray());
@@ -199,6 +200,8 @@ public class c {
     double rf() {
         return Double.longBitsToDouble(rj());
     }
+    
+    UUID rg(){boolean oa=a;a=false;UUID g=new UUID(rj(),rj());a=oa;return g;}
 
     char rc() {
         return (char) (b[j++] & 0xff);
@@ -317,6 +320,8 @@ public class c {
             switch (t) {
                 case -1:
                     return new K.KBoolean(rb());
+                case -2:
+                    return new K.KGuid(rg());
                 case -4:
                     return new K.KByte(b[j++]);
                 case -5:
@@ -406,6 +411,14 @@ public class c {
                 boolean[] array = (boolean[]) B.getArray();
                 for (;i < n;i++)
                     array[i] = rb();
+                return B;
+            }
+            case 2: {
+                K.KGuidVector B = new K.KGuidVector(n);
+                B.setAttr(attr);
+                UUID[] array = (UUID[]) B.getArray();
+                for (;i < n;i++)
+                    array[i] = rg();
                 return B;
             }
             case 4: {
@@ -573,15 +586,22 @@ public class c {
 
 
     public synchronized Object k() throws K4Exception,IOException {
+        boolean responseMsg=false;
+        boolean c=false;
+        synchronized(inputStream){
+            while(!responseMsg){ // throw away incoming aync, and error out on incoming sync
         inputStream.readFully(b = new byte[8]);
 
         a = b[0] == 1;
-        boolean c = b[2] == 1;
+                c = b[2] == 1;
+                byte msgType=b[1];
+                if(msgType==1){close();throw new IOException("Cannot process sync msg from remote");}
+                responseMsg=msgType == 2;
         j = 4;
 
         final int msgLength = ri() - 8;
 
-        final String message = "Receiving data ...";
+                final String message = "Receiving "+(c?"compressed ":"")+"data ...";
         final String note = "0 of " + (msgLength / 1024) + " kB";
         String title = "Studio for kdb+";
         UIManager.put("ProgressMonitor.progressText",title);
@@ -617,18 +637,18 @@ public class c {
         finally {
             pm.close();
         }
-
-        if (c) {
+            }
+            if (c)
             u();
-        } else {
+            else
             j = 0;
-        }
 
         if (b[0] == -128) {
             j = 1;
             throw new K4Exception(rs().toString(true));
         }
         return r();
+        }
     }
 
     private void u() {

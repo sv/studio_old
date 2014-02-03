@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class K {
     private static SimpleDateFormat formatter = new SimpleDateFormat();
@@ -97,13 +98,15 @@ public class K {
     }
 
     public static class BinaryPrimitive extends Primitive {
+        private static String[]ops={":","+","-","*","%","&","|","^","=","<",">","$",",","#","_","~","!","?","@",".","0:","1:","2:","in","within","like","bin","ss","insert","wsum","wavg","div","xexp","setenv"};
+        
         public String getDataType() {
             return "Binary Primitive";
         }
         ;
 
         public BinaryPrimitive(int i) {
-            super(i);
+            super(ops,i);
             type = 102;
         }
 
@@ -233,30 +236,16 @@ public class K {
             return "Primitive";
         }
         ;
-        // .:'(:;+;-;*;%;&;|;^;$;<;>;,;#;_;~;!;?;@;.;=)
-        private static Map map = new HashMap();
-
-        public static void init(char[] ops,int[] values) {
-            for (int i = 0;i < values.length;i++)
-                map.put(new Integer(values[i]),new Character(ops[i]));
-        }
         private int primitive;
-        private char charVal = ' ';
-
-
-        static {
-            init(":+-*%&|^$<>,#_~!?@.=".toCharArray(),new int[]{0,1,2,3,4,5,6,7,11,9,10,12,13,14,15,16,17,18,19,8});
-        }
-
-        public Primitive(int i) {
+        private String s=" ";
+        public Primitive(String[]ops,int i){
             primitive = i;
-            Character c = (Character) map.get(new Integer(i));
-            if (c != null)
-                charVal = c.charValue();
+            if(i>0&&i<ops.length)
+                s=ops[i];
         }
 
-        public char getPrimitive() {
-            return charVal;
+        public String getPrimitive() {
+            return s;
         }
 
         public int getPrimitiveAsInt() {
@@ -280,7 +269,7 @@ public class K {
             boolean listProjection = false;
             if ((objs.getLength() > 0) && (objs.at(0) instanceof UnaryPrimitive)) {
                 UnaryPrimitive up = (UnaryPrimitive) objs.at(0);
-                if (up.getPrimitiveAsInt() == 41) // used to be 40 ?
+                if (up.getPrimitiveAsInt() == 41) // plist
                     listProjection = true;
             }
 
@@ -365,8 +354,10 @@ public class K {
     }
 
     public static class UnaryPrimitive extends Primitive {
+        private static String[]ops={"::","+:","-:","*:","%:","&:","|:","^:","=:","<:",">:","$:",",:","#:","_:","~:","!:","?:","@:",".:","0::","1::","2::","avg","last","sum","prd","min","max","exit","getenv","abs","sqrt","log","exp","sin","asin","cos","acos","tan","atan","plist"};
+
         public UnaryPrimitive(int i) {
-            super(i);
+            super(ops,i);
             type = 101;
         }
 
@@ -375,7 +366,6 @@ public class K {
                 return;
 
             w.write(getPrimitive());
-            w.write(":");
         }
     }
 
@@ -492,17 +482,15 @@ public class K {
         public String toString(boolean showType) {
             String t;
             if (s == Short.MIN_VALUE)
-                t = "0Nh";
+                t = "0N";
             else if (s == Short.MAX_VALUE)
-                t = "0Wh";
+                t = "0W";
             else if (s == -Short.MAX_VALUE)
-                t = "-0Wh";
-            else {
+                t = "-0W";
+            else
                 t = Short.toString(s);
                 if (showType)
                     t += "h";
-            }
-
             return t;
         }
 
@@ -532,14 +520,18 @@ public class K {
         }
 
         public String toString(boolean showType) {
+            String s;
             if (isNull())
-                return "0N";
+                s="0N";
             else if (i == Integer.MAX_VALUE)
-                return "0W";
+                s="0W";
             else if (i == -Integer.MAX_VALUE)
-                return "-0W";
+                s="-0W";
             else
-                return Integer.toString(i);
+                s=Integer.toString(i);
+            if (showType)
+                s += "i";
+            return s;
         }
 
         public void toString(LimitedWriter w,boolean showType) throws IOException {
@@ -601,16 +593,17 @@ public class K {
         public String toString(boolean showType) {
             String s;
             if (isNull())
-                s = "0Nj";
+                s = "0N";
             else if (j == Long.MAX_VALUE)
-                s = "0Wj";
+                s = "0W";
             else if (j == -Long.MAX_VALUE)
-                s = "-0Wj";
+                s = "-0W";
             else {
                 s = Long.toString(j);
+            }
                 if (showType)
                     s += "j";
-            }
+
             return s;
         }
 
@@ -690,7 +683,7 @@ public class K {
                     double epsilon = 1e-9;
                     double diff = f - Math.round(f);
                     if ((diff < epsilon) && (diff > -epsilon))
-                        s += "f";
+                        s += "e";
                 }
                 return s;
             }
@@ -793,6 +786,32 @@ public class K {
         }
     }
 
+    public static class KGuid extends KBase {
+        static UUID nuuid=new UUID(0,0);
+        public String getDataType() {
+            return "Guid";
+        }
+        ;
+        UUID uuid;
+
+        public KGuid(UUID uuid) {
+            type = -2;
+            this.uuid = uuid;
+        }
+
+        public boolean isNull() {
+            return uuid == nuuid;
+        }
+
+        public String toString(boolean showType) {
+            return uuid.toString();
+        }
+
+        public void toString(LimitedWriter w,boolean showType) throws IOException {
+            w.write(toString(showType));
+        }
+    }
+    
     public static class KTime extends KBase {
         public String getDataType() {
             return "Time";
@@ -1151,9 +1170,10 @@ public class K {
         public Time toTime(){return new Time((j/1000000));}
     }
 
+    static java.text.DecimalFormat i2Formatter= new java.text.DecimalFormat("00");
 
     static String i2(int i) {
-        return new java.text.DecimalFormat("00").format(i);
+        return i2Formatter.format(i);
     }
 
     public static abstract class KBaseVector extends KBase {
@@ -1247,20 +1267,20 @@ public class K {
                         w.write(" ");
                     short v = Array.getShort(array,i);
                     if (v == Short.MIN_VALUE)
-                        w.write("0Nh");
+                        w.write("0N");
                     else if (v == Short.MAX_VALUE)
-                        w.write("0Wh");
+                        w.write("0W");
                     else if (v == -Short.MAX_VALUE)
-                        w.write("-0Wh");
+                        w.write("-0W");
                     else {
                         w.write("" + v);
+                    }
+                }
                         if (showType)
                             w.write("h");
                     }
                 }
             }
-        }
-    }
 
     public static class KIntVector extends KBaseVector {
         public String getDataType() {
@@ -1298,6 +1318,8 @@ public class K {
                     else
                         w.write("" + v);
                 }
+                if(showType)
+                    w.write("i");
             }
         }
     }
@@ -1421,15 +1443,15 @@ public class K {
                     if (i > 0)
                         w.write(" ");
                     if (Float.isNaN(d)) {
-                        w.write("0ne");
+                        w.write("0N");
                         printedP = true;
                     }
                     else if (d == Float.POSITIVE_INFINITY) {
-                        w.write("0we");
+                        w.write("0W");
                         printedP = true;
                     }
                     else if (d == Float.NEGATIVE_INFINITY) {
-                        w.write("-0we");
+                        w.write("-0W");
                         printedP = true;
                     }
                     else {
@@ -1472,20 +1494,20 @@ public class K {
                         w.write(" ");
                     long v = Array.getLong(array,i);
                     if (v == Long.MIN_VALUE)
-                        w.write("0Nj");
+                        w.write("0N");
                     else if (v == Long.MAX_VALUE)
-                        w.write("0Wj");
+                        w.write("0W");
                     else if (v == -Long.MAX_VALUE)
-                        w.write("-0Wj");
+                        w.write("-0W");
                     else {
                         w.write("" + v);
+                    }
+                }
                         if (showType)
                             w.write("j");
                     }
                 }
             }
-        }
-    }
 
     public static class KMonthVector extends KBaseVector {
         public String getDataType() {
@@ -1515,19 +1537,19 @@ public class K {
                         w.write(" ");
                     int v = Array.getInt(array,i);
                     if (v == Integer.MIN_VALUE)
-                        w.write("0Nm");
+                        w.write("0N");
                     else if (v == Integer.MAX_VALUE)
-                        w.write("0Wm");
+                        w.write("0W");
                     else if (v == -Integer.MAX_VALUE)
-                        w.write("-0Wm");
+                        w.write("-0W");
                     else {
                         int m = v + 24000, y = m / 12;
                         String s = i2(y / 100) + i2(y % 100) + "." + i2(1 + m % 12);
-                        if (showType)
-                            s += "m";
                         w.write(s);
                     }
                 }
+                if (showType)
+                  w.write("m");
             }
         }
     }
@@ -1553,6 +1575,7 @@ public class K {
             if (getLength() == 0)
                 w.write("`date$()");
             else {
+                boolean printD=true;
                 if (getLength() == 1)
                     w.write(enlist);
                 for (int i = 0;i < getLength();i++) {
@@ -1560,13 +1583,49 @@ public class K {
                         w.write(" ");
                     int v = Array.getInt(array,i);
                     if (v == Integer.MIN_VALUE)
-                        w.write("0nd");
+                        w.write("0N");
                     else if (v == Integer.MAX_VALUE)
-                        w.write("0wd");
+                        w.write("0W");
                     else if (v == -Integer.MAX_VALUE)
-                        w.write("-0wd");
-                    else
+                        w.write("-0W");
+                    else {
+                        printD=false;    
                         w.write(sd("yyyy.MM.dd",new Date(86400000L * (v + 10957))));
+                }
+            }
+                if(printD)
+                    w.write("d");
+            }
+        }
+    }
+
+    public static class KGuidVector extends KBaseVector {
+        public String getDataType() {
+            return "Guid Vector";
+        }
+        ;
+
+        public KGuidVector(int length) {
+            super(UUID.class,length);
+            type = 2;
+        }
+
+        public KBase at(int i) {
+            return new KGuid((UUID)Array.get(array,i));
+        }
+
+        public void toString(LimitedWriter w,boolean showType) throws IOException {
+            w.write(super.toString(showType));
+
+            if (getLength() == 0)
+                w.write("`guid$()");
+            else {
+                if (getLength() == 1)
+                    w.write(enlist);
+                for (int i = 0;i < getLength();i++) {
+                    if (i > 0)
+                        w.write(" ");
+                    w.write(((UUID)Array.get(array,i)).toString());
                 }
             }
         }
@@ -1633,13 +1692,28 @@ public class K {
             if (getLength() == 0)
                 w.write("`datetime$()");
             else {
+                boolean printZ=true;
                 if (getLength() == 1)
                     w.write(enlist);
                 for (int i = 0;i < getLength();i++) {
                     if (i > 0)
                         w.write(" ");
-                    w.write(at(i).toString(false));
+                    double d = Array.getDouble(array,i);
+                    if (i > 0)
+                        w.write(" ");
+                    if (Double.isNaN(d))
+                        w.write("0N");
+                    else if (d == Double.POSITIVE_INFINITY)
+                        w.write("0w");
+                    else if (d == Double.NEGATIVE_INFINITY)
+                        w.write("-0w");
+                    else{
+                        printZ=false;
+                        w.write(sd("yyyy.MM.dd HH:mm:ss.SSS",new Timestamp(((long) (.5 + 8.64e7 * (d + 10957))))));
+                    }
                 }
+                if(printZ)
+                    w.write("z");
             }
         }
     }
@@ -1787,7 +1861,15 @@ public class K {
                 for (int i = 0;i < getLength();i++) {
                     if (i > 0)
                         w.write(" ");
-                    w.write(at(i).toString(false));
+                    int v = Array.getInt(array,i);
+                    if (v == Integer.MIN_VALUE)
+                        w.write("0Nt");
+                    else if (v == Integer.MAX_VALUE)
+                        w.write("0Wt");
+                    else if (v == -Integer.MAX_VALUE)
+                        w.write("-0Wt");
+                    else
+                        w.write(sd("HH:mm:ss.SSS",new Time(v)));
                 }
             }
         }
