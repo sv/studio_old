@@ -202,7 +202,11 @@ public class LineChart {
 
             try {
                 for (int row = 0; row < table.getRowCount(); row++) {
-                    cds.addValue(((ToDouble) table.getValueAt(row,col)).toDouble(),String.valueOf(table.getValueAt(row,0)),table.getColumnName(col));
+                    Object catObj = table.getValueAt(row,0);
+                    if(catObj instanceof K.KCharacterVector) {
+                        catObj = new String((char[])((K.KCharacterVector)catObj).getArray());
+                    }
+                    cds.addValue(((ToDouble) table.getValueAt(row,col)).toDouble(),String.valueOf(catObj),table.getColumnName(col));
                 }
             } catch (SeriesException e) {
                 System.err.println("Error adding to series");
@@ -233,7 +237,15 @@ public class LineChart {
             frame.toFront();
         }
     }
-
+    private static boolean isCharArrayList(KTableModel table, int colIdx) {
+        Class klass = table.getColumnClass(colIdx);
+        if (klass == K.KList.class) {
+            if (table.getColumn(colIdx).getLength() > 0) {
+                return table.getColumn(colIdx).at(0).getClass() == K.KCharacterVector.class;
+            }
+        }
+        return false;
+    }
     public static JFreeChart createDataset(KTableModel table) {
         TimeZone tz = TimeZone.getTimeZone("GMT");
 
@@ -242,15 +254,19 @@ public class LineChart {
         if (table.getColumnCount() > 0) {
             Class klass = table.getColumnClass(0);
 
-            if ((klass == K.KTimestampVector.class) ||(klass == K.KTimespanVector.class) || (klass == K.KDateVector.class) || (klass == K.KTimeVector.class) || (klass == K.KMonthVector.class) || (klass == K.KMinuteVector.class) || (klass == K.KSecondVector.class) || (klass == K.KDatetimeVector.class)) {
+            if ((klass == K.KTimestampVector.class) || (klass == K.KTimespanVector.class) || 
+                    (klass == K.KDateVector.class) || (klass == K.KTimeVector.class) || 
+                    (klass == K.KMonthVector.class) || (klass == K.KMinuteVector.class) || 
+                    (klass == K.KSecondVector.class) || (klass == K.KDatetimeVector.class)) {
 
                 ds = createTimeSeriesCollection(tz, table, klass);
-            }
-            else if ((klass == K.KDoubleVector.class) || (klass == K.KFloatVector.class) || (klass == K.KShortVector.class) || (klass == K.KIntVector.class) || (klass == K.KLongVector.class)) {
+            } else if ((klass == K.KDoubleVector.class) || (klass == K.KFloatVector.class) || 
+                    (klass == K.KShortVector.class) || (klass == K.KIntVector.class) || 
+                    (klass == K.KLongVector.class)) {
 
                 ds = createXY(table);
-            } else if( klass == K.KSymbolVector.class){
-                ds= (CategoryDataset)createBarChart(table);
+            } else if (klass == K.KSymbolVector.class || isCharArrayList(table, 0)) {
+                ds = (CategoryDataset) createBarChart(table);
             }
         }
 

@@ -1983,7 +1983,6 @@ public class K {
         public String getDataType() {
             return "Character Vector";
         }
-        ;
 
         public KCharacterVector(int length) {
             super(char.class,length);
