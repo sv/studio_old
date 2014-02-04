@@ -15,10 +15,13 @@
             <zipfileset src="${dist.dir}/lib/images.jar">
                 <exclude name="**/META-INF/MANIFEST.MF"/>
             </zipfileset>
-            <zipfileset src="${dist.dir}/lib/jfreechart-1.0.13.jar">
+            <zipfileset src="${dist.dir}/lib/jfreechart-1.0.17.jar">
                 <exclude name="**/META-INF/MANIFEST.MF"/>
             </zipfileset>
-            <zipfileset src="${dist.dir}/lib/jcommon-1.0.16.jar">
+            <zipfileset src="${dist.dir}/lib/jcommon-1.0.21.jar">
+                <exclude name="**/META-INF/MANIFEST.MF"/>
+            </zipfileset>
+            <zipfileset src="${dist.dir}/lib/jfreesvg-1.4.jar">
                 <exclude name="**/META-INF/MANIFEST.MF"/>
             </zipfileset>
             <zipfileset src="${dist.dir}/lib/gson-1.5.jar">
