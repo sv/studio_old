@@ -6,6 +6,7 @@
 
 package studio.ui;
 
+import java.awt.Color;
 import studio.kdb.K;
 import studio.kdb.KTableModel;
 import studio.kdb.ToDouble;
@@ -65,11 +66,11 @@ public class LineChart {
                         }
                     }
                 } else if (klass == K.KTimestampVector.class) {
-                    series = new TimeSeries(table.getColumnName(col), Day.class);
+                    series = new TimeSeries(table.getColumnName(col));
                     K.KTimestampVector dates = (K.KTimestampVector) table.getColumn(0);
                     for (int row = 0; row < dates.getLength(); row++) {
                         K.KTimestamp date = (K.KTimestamp) dates.at(row);
-                        Day day = new Day(new java.util.Date(date.toTimestamp().getTime()), tz);
+                        FixedMillisecond day = new FixedMillisecond(date.toTimestamp().getTime());
                         Object o = table.getValueAt(row, col);
                         if (o instanceof K.KBase) {
                             if (!((K.KBase) o).isNull()) {
@@ -170,19 +171,26 @@ public class LineChart {
 
     private static XYDataset createXY(KTableModel table) {
         XYSeriesCollection xysc = new XYSeriesCollection();
-        for (int col = 1; col < table.getColumnCount(); col++) {
+        boolean syntheticColumn = table.getColumnCount()==1;
+        int firstColumn =syntheticColumn?0:1;    
+        for (int col = firstColumn; col < table.getColumnCount(); col++) {
             XYSeries series = null;
             try {
                 series = new XYSeries(table.getColumnName(col));
                 for (int row = 0; row < table.getRowCount(); row++) {
-                    double x = ((ToDouble) table.getValueAt(row,0)).toDouble();
-                    double y = ((ToDouble) table.getValueAt(row,col)).toDouble();
+                    double x;
+                    if (!syntheticColumn) {
+                        x = ((ToDouble) table.getValueAt(row, 0)).toDouble();
+                    } else {
+                        x = row;
+                    }
+                    double y = ((ToDouble) table.getValueAt(row, col)).toDouble();
                     series.add(x, y);
                 }
             } catch (SeriesException e) {
                 System.err.println("Error adding to series");
             }
-            if (series.getItemCount() > 0) {
+            if (series!=null && series.getItemCount() > 0) {
                 xysc.addSeries(series);
             }
         }
