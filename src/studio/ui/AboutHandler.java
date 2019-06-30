@@ -1,12 +1,10 @@
-/* Studio for kdb+ by Charles Skelton
-   is licensed under a Creative Commons Attribution-Noncommercial-Share Alike 3.0 Germany License
-   http://creativecommons.org/licenses/by-nc-sa/3.0
-   except for the netbeans components which retain their original copyright notice
-*/
-
 package studio.ui;
 
-public class AboutHandler {
+import java.awt.desktop.AboutEvent;
+import java.awt.desktop.QuitEvent;
+import java.awt.desktop.QuitResponse;
+
+public class AboutHandler implements java.awt.desktop.AboutHandler  {
     private Studio s;
 
     public AboutHandler(Studio s) {
@@ -14,6 +12,11 @@ public class AboutHandler {
     }
 
     public void about() {
+        s.about();
+    }
+
+    @Override
+    public void handleAbout(AboutEvent e) {
         s.about();
     }
 }

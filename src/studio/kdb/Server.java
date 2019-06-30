@@ -1,8 +1,3 @@
-/* Studio for kdb+ by Charles Skelton
-   is licensed under a Creative Commons Attribution-Noncommercial-Share Alike 3.0 Germany License
-   http://creativecommons.org/licenses/by-nc-sa/3.0
-   except for the netbeans components which retain their original copyright notice
-*/
 package studio.kdb;
 
 import java.awt.Color;
@@ -16,6 +11,7 @@ public class Server {
     private int port = 0;
     private String username = "";
     private String password = "";
+    private boolean useTLS=false;
 
     public Properties getAsProperties() {
         Properties p = new Properties();
@@ -24,6 +20,7 @@ public class Server {
         p.put("PORT",new Integer(port));
         p.put("USERNAME",username);
         p.put("PASSWORD",password);
+        p.put("USETLS",useTLS);
         return p;
     }
 
@@ -58,6 +55,9 @@ public class Server {
     public void setUsername(String username) {
         this.username = username;
     }
+    public void setUseTLS(boolean useTLS){
+      this.useTLS=useTLS;
+    }
 
     public Server() {
     }
@@ -70,9 +70,10 @@ public class Server {
         this.password = s.password;
         this.backgroundColor = s.backgroundColor;
         this.authenticationMechanism = s.authenticationMechanism;
+        this.useTLS=s.useTLS;
     }
 
-    public Server(String name,String host,int port,String username,String password,Color backgroundColor,String authenticationMechanism) {
+    public Server(String name,String host,int port,String username,String password,Color backgroundColor,String authenticationMechanism,boolean useTLS) {
         this.name = name;
         this.host = host;
         this.port = port;
@@ -80,6 +81,7 @@ public class Server {
         this.password = password;
         this.backgroundColor = backgroundColor;
         this.authenticationMechanism = authenticationMechanism;
+        this.useTLS=useTLS;
     }
 
     public void setHost(String host) {
@@ -108,5 +110,8 @@ public class Server {
 
     public String toString() {
         return name;
+    }
+    public boolean getUseTLS(){
+      return useTLS;
     }
 }

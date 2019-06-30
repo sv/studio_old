@@ -1,9 +1,3 @@
-/* Studio for kdb+ by Charles Skelton
-   is licensed under a Creative Commons Attribution-Noncommercial-Share Alike 3.0 Germany License
-   http://creativecommons.org/licenses/by-nc-sa/3.0
-   except for the netbeans components which retain their original copyright notice
-*/
-
 package studio.ui;
 
 import studio.kdb.*;
@@ -26,6 +20,8 @@ import javax.swing.table.TableModel;
 import javax.swing.text.*;
 import javax.swing.undo.UndoManager;
 import java.awt.*;
+import java.awt.desktop.QuitEvent;
+import java.awt.desktop.QuitResponse;
 import java.awt.event.*;
 import java.io.*;
 import java.lang.reflect.Array;
@@ -379,8 +375,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
         Runnable runner = new Runnable() {
             public void run() {
                 if (filename != null) {
-                    String lineSeparator = (String) java.security.AccessController.doPrivileged(new sun.security.action.GetPropertyAction("line.separator"));
-
+                    String lineSeparator = System.lineSeparator();
                     BufferedWriter fw = null;
 
                     try {
@@ -471,8 +466,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
         Runnable runner = new Runnable() {
             public void run() {
                 if (filename != null) {
-                    String lineSeparator = (String) java.security.AccessController.doPrivileged(new sun.security.action.GetPropertyAction("line.separator"));
-
+                    String lineSeparator = System.lineSeparator();
                     BufferedWriter fw = null;
 
                     try {
@@ -1562,6 +1556,7 @@ public class Studio extends JPanel implements Observer,WindowListener {
 
     private void rebuildMenuBar() {
         menubar = createMenuBar();
+        Desktop.getDesktop().setDefaultMenuBar(menubar);
         SwingUtilities.invokeLater(
             new Runnable() {
             
@@ -2008,9 +2003,9 @@ public class Studio extends JPanel implements Observer,WindowListener {
         if (MAC_OS_X)
             try {
                 // Generate and register the OSXAdapter, passing it a hash of all the methods we wish to
-                // use as delegates for various com.apple.eawt.ApplicationListener methods
-                OSXAdapter.setQuitHandler(new QuitHandler(this),QuitHandler.class.getDeclaredMethod("quit",(Class[]) null));
-                OSXAdapter.setAboutHandler(new AboutHandler(this),AboutHandler.class.getDeclaredMethod("about",(Class[]) null));
+                java.awt.Desktop.getDesktop().setQuitHandler(new QuitHandler(this));
+                java.awt.Desktop.getDesktop().setAboutHandler(new AboutHandler(this));
+
                 registeredForMaxOSXEvents = true;
             }
             catch (Exception e) {

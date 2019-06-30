@@ -1,8 +1,3 @@
-/* Studio for kdb+ by Charles Skelton
-   is licensed under a Creative Commons Attribution-Noncommercial-Share Alike 3.0 Germany License
-   http://creativecommons.org/licenses/by-nc-sa/3.0
-   except for the netbeans components which retain their original copyright notice
-*/
 package studio.kdb;
 
 import java.io.IOException;
@@ -61,15 +56,6 @@ public class K {
             write(o,(byte) type);
         }
 
-        public void toString(LimitedWriter w,boolean showType) throws IOException {
-        }
-        ;
-
-        public String toString(boolean showType) {
-            return "";
-        }
-        ;
-
         public String toString() {
             return toString(true);
         }
@@ -78,6 +64,30 @@ public class K {
         public boolean isNull() {
             return false;
         }
+
+
+        private byte attr;
+
+        public byte getAttr() {
+            return attr;
+        }
+
+        public void setAttr(byte attr) {
+            this.attr = attr;
+        }
+
+        private static String[] sAttr = new String[]{"","`s#","`u#","`p#","`g#"};
+
+        public String toString(boolean showType) {
+            if (attr <= sAttr.length)
+                return sAttr[attr];
+            return "";
+        }
+
+        public void toString(LimitedWriter w,boolean showType) throws IOException {
+            w.write(toString(showType));
+        }
+
         //      public KBase(int type){this.type=type;}
     }
 
@@ -958,7 +968,9 @@ public class K {
         }
 
         public void toString(LimitedWriter w,boolean showType) throws IOException {
-            boolean useBrackets = x instanceof Flip;
+            boolean useBrackets = getAttr()!=0||x instanceof Flip;
+
+            super.toString(w,showType);
 
             if (useBrackets)
                 w.write("(");
@@ -1191,24 +1203,6 @@ public class K {
         public int getLength() {
             return length;
         }
-        ;
-        private byte attr;
-
-        public byte getAttr() {
-            return attr;
-        }
-
-        public void setAttr(byte attr) {
-            this.attr = attr;
-        }
-        private static String[] sAttr = new String[]{"","`s#","`u#","`p#","`g#"};
-
-        public String toString(boolean showType) {
-            if (attr <= sAttr.length)
-                return sAttr[attr];
-            return "";
-        }
-        ;
 
         public Object getArray() {
             return array;

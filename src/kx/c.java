@@ -1,8 +1,3 @@
-/* Studio for kdb+ by Charles Skelton
-   is licensed under a Creative Commons Attribution-Noncommercial-Share Alike 3.0 Germany License
-   http://creativecommons.org/licenses/by-nc-sa/3.0
-*/
-
 package kx;
 
 /*
@@ -24,9 +19,13 @@ types
 111 f\:
 112 dynamic load
  */
+import java.net.InetSocketAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import studio.kdb.K;
+
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import javax.swing.*;
 import java.io.*;
 import java.net.ServerSocket;
@@ -50,9 +49,7 @@ public class c {
         this.frame = frame;
     }
   
-
     void io(Socket s) throws IOException {
-        s.setReceiveBufferSize(1048576);
         s.setTcpNoDelay(true);
         inputStream = new DataInputStream(s.getInputStream());
         outputStream = s.getOutputStream();
@@ -88,16 +85,6 @@ public class c {
     }
 
     public c() {
-    }
-
-    public c(Socket s) throws IOException {
-        io(s);
-        inputStream.read(b = new byte[99]);
-        outputStream.write(b,0,1);
-    }
-
-    public c(ServerSocket s) throws IOException {
-        this(s.accept());
     }
 
     public static class K4AccessException extends Exception {
@@ -148,7 +135,20 @@ public class c {
     }
 
     public void reconnect(boolean retry) throws IOException,K4Exception {
-        io(new Socket(host,port));
+        Socket s=new Socket();
+        s.setReceiveBufferSize(1024*1024);
+        s.connect(new InetSocketAddress(host,port));
+        if(useTLS){
+            try{
+                s=((SSLSocketFactory)SSLSocketFactory.getDefault()).createSocket(s,host,port,true);
+                ((SSLSocket)s).startHandshake();
+            }
+            catch(Exception e){
+                s.close();
+                throw e;
+            }
+        }
+        io(s);
         java.io.ByteArrayOutputStream baos = new ByteArrayOutputStream();
         java.io.DataOutputStream dos = new DataOutputStream(baos);
         dos.write((up+(retry?"\3":"")).getBytes());
@@ -167,11 +167,16 @@ public class c {
     private String host;
     private int port;
     private String up;
+    private boolean useTLS;
 
-    public c(String h,int p,String u) {
+    public c(String h,int p,String u,boolean useTLS) {
         host = h;
         port = p;
         up = u;
+        this.useTLS=useTLS;
+    }
+    public c(String h,int p,String u) {
+        this(h,p,u,false);
     }
 
     boolean rb() {
@@ -386,6 +391,12 @@ public class c {
             j++;
             return null;
         }
+        if(t==127){
+            K.Dict d=new K.Dict(r(),r());
+            d.setAttr((byte)1);
+            return d;
+        }
+
         if (t > 99) {
             j++;
             return null;

@@ -1,12 +1,9 @@
-/* Studio for kdb+ by Charles Skelton
-   is licensed under a Creative Commons Attribution-Noncommercial-Share Alike 3.0 Germany License
-   http://creativecommons.org/licenses/by-nc-sa/3.0
-   except for the netbeans components which retain their original copyright notice
-*/
-
 package studio.ui;
 
-public class QuitHandler {
+import java.awt.desktop.QuitEvent;
+import java.awt.desktop.QuitResponse;
+
+public class QuitHandler implements java.awt.desktop.QuitHandler {
     private Studio s;
 
     public QuitHandler(Studio s) {
@@ -15,5 +12,10 @@ public class QuitHandler {
 
     public boolean quit() {
         return s.quit();
+    }
+
+    @Override
+    public void handleQuitRequestWith(QuitEvent e, QuitResponse response) {
+        s.quit();
     }
 }
